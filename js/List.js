@@ -57,7 +57,8 @@ var List = (function (lib) {
 			}
 			else if (isDeleteKey(e.type, e.keyCode) &&
 					e.srcElement === getLastInput(hostNode) &&
-					isLastInputEmpty(hostNode))
+					isLastInputEmpty(hostNode) &&
+					this.node.children.length > 1)
 			{
 				hostNode.removeChild(hostNode.lastChild);
 				$("input", hostNode.lastChild).focus();

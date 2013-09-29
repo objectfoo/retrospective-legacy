@@ -37,6 +37,7 @@ var Editable = (function (lib) {
 			edit.focus();
 		},
 
+		//NOTE: IE7/8 will need polyfill for indexOf
 		processKey: function (keyCode) {
 			if (!!~[27, 13].indexOf(keyCode)) {
 				this.exitEditMode(keyCode);
