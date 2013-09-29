@@ -1,72 +1,68 @@
-/*global appLib, console*/
 var List = (function (lib) {
 	"use strict";
+
 	var el = lib.el,
 		strings = lib.strings,
+		$ = lib.$,
 		$$ = lib.$$;
 
-	function inputWithPlaceholder(placeholder) {
-		var cfg = {
-			"type": "text",
-			"placeholder" : placeholder
-		};
-
-		return el("input", cfg);
+	//NOTE: IE7/8 will need polyfill for indexOf
+	function isExitKey(type, keyCode) {
+		return type === "keydown" && !!~[13,9].indexOf(keyCode);
 	}
 
-	function updateLine(target, node) {
-		var line = el("li", [
-				el("input", {"type": "number"}),
-				el("span", target.value)
-			]);
-
-		node.insertBefore(line, node.lastElementChild);
-		target.value = "";
+	function isDeleteKey(type, keyCode) {
+		return type === "keydown" && keyCode === 8;
 	}
+
+	function getLastInput(parent) {
+		return $("input", parent.lastChild);
+	}
+
+	function isLastInputEmpty(parent) {
+		return getLastInput(parent).value.length <= 0;
+	}
+
+	function addNewLine(e, parent, placeholder) {
+		$("input", parent.appendChild(lineWithPlaceholder(placeholder))).focus();
+		e.preventDefault();
+	}
+
+	function lineWithPlaceholder(placeholder) {
+		return el("li", {className: strings.CSS_INPUT}, [
+			el("input", {type: "text", placeholder: placeholder})
+		]);
+	};
 
 	function List(node, placeholder) {
 		this.node = node;
-		this.entryInput = inputWithPlaceholder(placeholder);
-		this.entryLine = el("li", {"className": strings.CSS_INPUT}, [this.entryInput]);
-		node.appendChild(this.entryLine);
+		this.placeholder = placeholder;
+		this.node.appendChild(lineWithPlaceholder(this.placeholder));
 
-		this.entryLine.addEventListener("change", this);
-		node.addEventListener("click", this);
+		this.node.addEventListener("keydown", this);
 	}
 
 	List.prototype = {
 
-		toggleVote: function () {
-			var action,
-			node = this.node;
-
-			if ($$("li", node).length > 1 || node.classList.contains(strings.CSS_VOTING)) {
-				action  = node.classList.toggle(strings.CSS_VOTING) ?
-					"removeChild":
-					"appendChild";
-				node[action](this.entryLine);
-			}
-			else {
-				this.entryInput.placeholder = strings.MSG_BAD_PLZ;
-				(function (entryInput) {
-					setTimeout(function () {
-						entryInput.placeholder = strings.MSG_BAD;
-					}, 3000);
-				})(this.entryInput);
-			}
-		},
+		toggleVote: function () {},
 
 		handleEvent: function (e) {
-			switch (e.type) {
-			case "change":
-				updateLine(e.target, this.node);
-				break;
-			case "click":
-				if (e.target.tagName.toUpperCase() === "SPAN") {
-					// if click target is span (.class?) then create editable
-					console.log("click in span");
-				}
-				break;
+			var hostNode = this.node;
+
+			if (isExitKey(e.type, e.keyCode) && !e.shiftKey &&
+					e.srcElement === getLastInput(hostNode) &&
+					!isLastInputEmpty(hostNode))
+			{
+				addNewLine(e, hostNode, this.placeholder);
+			}
+			else if (isDeleteKey(e.type, e.keyCode) &&
+					e.srcElement === getLastInput(hostNode) &&
+					isLastInputEmpty(hostNode))
+			{
+				hostNode.removeChild(hostNode.lastChild);
+				$("input", hostNode.lastChild).focus();
+				e.preventDefault();
+				e.stopPropagation();
 			}
 		}
 	};
