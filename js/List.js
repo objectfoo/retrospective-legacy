@@ -6,7 +6,7 @@ var List = (function (lib) {
 		$ = lib.$,
 		$$ = lib.$$;
 
-	//NOTE: IE7/8 will need polyfill for indexOf
+	//NOTE: indexOf doesn't work in ie7/ie8
 	function isExitKey(type, keyCode) {
 		return type === "keydown" && !!~[13,9].indexOf(keyCode);
 	}
@@ -23,9 +23,32 @@ var List = (function (lib) {
 		return getLastInput(parent).value.length <= 0;
 	}
 
+	function shouldAddLine(e, hostNode) {
+		return isExitKey(e.type, e.keyCode) &&
+				!e.shiftKey &&
+				e.srcElement === getLastInput(hostNode) &&
+				!isLastInputEmpty(hostNode)
+	}
+
+	function shouldDeleteLine(e, hostNode) {
+		return isDeleteKey(e.type, e.keyCode) &&
+				e.srcElement.value.length <= 0 &&
+				hostNode.children.length > 1
+	}
+
 	function addNewLine(e, parent, placeholder) {
 		$("input", parent.appendChild(lineWithPlaceholder(placeholder))).focus();
 		e.preventDefault();
+	}
+
+	function deleteLine(e, hostNode) {
+		// TODO: ...ElementSibling doesn't work in ie7/ie8
+		var focusEl = e.srcElement.parentNode.previousElementSibling ||
+				e.srcElement.parentNode.nextElementSibling ||
+				e.srcElement.parentNode.lastElementChild;
+
+		hostNode.removeChild(e.srcElement.parentNode);
+		$("input", focusEl).focus();
 	}
 
 	function lineWithPlaceholder(placeholder) {
@@ -49,19 +72,11 @@ var List = (function (lib) {
 		handleEvent: function (e) {
 			var hostNode = this.node;
 
-			if (isExitKey(e.type, e.keyCode) && !e.shiftKey &&
-					e.srcElement === getLastInput(hostNode) &&
-					!isLastInputEmpty(hostNode))
-			{
+			if (shouldAddLine(e, hostNode)) {
 				addNewLine(e, hostNode, this.placeholder);
 			}
-			else if (isDeleteKey(e.type, e.keyCode) &&
-					e.srcElement === getLastInput(hostNode) &&
-					isLastInputEmpty(hostNode) &&
-					this.node.children.length > 1)
-			{
-				hostNode.removeChild(hostNode.lastChild);
-				$("input", hostNode.lastChild).focus();
+			else if (shouldDeleteLine(e, hostNode)) {
+				deleteLine(e, hostNode);
 				e.preventDefault();
 				e.stopPropagation();
 			}
