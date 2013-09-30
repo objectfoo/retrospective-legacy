@@ -19,6 +19,20 @@ var appLib = (function () {
 		return (node || document).querySelectorAll(expression);
 	}
 
+	function removeClass(classToRemove, classNames) {
+		var xs = classNames.replace(/^\s+|\s+$/, '').split(/\s+/g),
+		index = xs.indexOf(classToRemove),
+		a = [], i, len;
+
+		for (i = 0, len = xs.length; i < len; i++) {
+			if (classToRemove !== xs[i]) {
+				a.push(xs[i]);
+			}
+		}
+		return a.join(' ');
+	}
+
+
 	function indexOf(needle, list) {
 		var i = 0,
 			l = list.length;
@@ -28,11 +42,6 @@ var appLib = (function () {
 			}
 		}
 		return -1;
-	}
-
-	function shortDate() {
-		var d = new Date();
-		return [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("-");
 	}
 
 	// is x an object with a numeric length, but not a DOM element?
@@ -104,9 +113,9 @@ var appLib = (function () {
 	return {
 		$: $,
 		$$: $$,
-		shortDate: shortDate,
 		el: el,
 		strings: strings,
-		indexOf: indexOf
+		indexOf: indexOf,
+		removeClass: removeClass
 	};
 })();
