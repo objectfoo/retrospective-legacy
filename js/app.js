@@ -1,5 +1,5 @@
-/*global appLib, Editable, List*/
-(function (List, Editable, lib) {
+/*global appLib, List*/
+(function (List, lib) {
 	"use strict";
 	var good,
 		bad,
@@ -13,9 +13,8 @@
 
 	good = new List($("#good"), strings.MSG_GOOD);
 	bad = new List($("#bad"), strings.MSG_BAD);
-	new Editable($("#teamName"));
 
 	document.body.classList.remove("loading");
 	$("#vote").addEventListener("click", bad.toggleVote.bind(bad));
 
-})(List, Editable, appLib);
+})(List, appLib);
