@@ -3,12 +3,12 @@ var List = (function (lib) {
 
 	var el = lib.el,
 		strings = lib.strings,
+		indexOf = lib.indexOf,
 		$ = lib.$,
 		$$ = lib.$$;
 
-	//NOTE: indexOf doesn't work in ie7/ie8
 	function isExitKey(type, keyCode) {
-		return type === "keydown" && !!~[13,9].indexOf(keyCode);
+		return type === "keydown" && !!~indexOf(keyCode, [13, 9]);
 	}
 
 	function isDeleteKey(type, keyCode) {

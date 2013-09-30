@@ -19,6 +19,17 @@ var appLib = (function () {
 		return (node || document).querySelectorAll(expression);
 	}
 
+	function indexOf(needle, list) {
+		var i = 0,
+			l = list.length;
+		for (; i < l; ++i) {
+			if( needle === list[i]) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	function shortDate() {
 		var d = new Date();
 		return [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("-");
@@ -95,6 +106,7 @@ var appLib = (function () {
 		$$: $$,
 		shortDate: shortDate,
 		el: el,
-		strings: strings
+		strings: strings,
+		indexOf: indexOf
 	};
 })();

@@ -2,7 +2,8 @@
 var Editable = (function (lib) {
 	"use strict";
 	var el = lib.el,
-		strings = lib.strings;
+		strings = lib.strings,
+		indexOf = lib.indexOf;
 
 	function Editable(node) {
 		this.parent = node.parentNode;
@@ -37,9 +38,8 @@ var Editable = (function (lib) {
 			edit.focus();
 		},
 
-		//NOTE: IE7/8 will need polyfill for indexOf
 		processKey: function (keyCode) {
-			if (!!~[27, 13].indexOf(keyCode)) {
+			if (!!~indexOf(keyCode, [27,13])) {
 				this.exitEditMode(keyCode);
 			}
 		},
