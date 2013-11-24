@@ -3,27 +3,69 @@
 <title>Retrospective</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<body class="loading">
-	<header>
-		<h1>Retrospective</h1>
-		<time>[today's date]</time>
+<body>
+	<header class="media">
+		<div class="media__end">
+			<button type="button" class="btn--gradient clearAll">Clear All</button>
+		</div>
+		<div class="media__begin text--right">
+			<time class="time-retrospective text--mute fade">[today's date]</time>
+		</div>
+		<div class="media__bd">
+			<h1 class="page-title">Retrospective</h1>
+		</div>
 	</header>
 
-	<main>
-		<h2>Went well</h2>
-		<ul id="good">
-		</ul>
+	<main id="retrospective" class="fade">
+		<section>
+			<header>
+				<h1 class="section-header">Went Well</h1>
+				<input type="text" class="input" id="goodInput" placeholder="What went well?">
+			</header>
+			<ul id="goodList" class="list--plain list--items"/>
+		</section>
 
-		<h2>Needs improvement</h2>
-		<ul id="bad">
-		</ul>
+		<section>
+			<header>
+				<h1 class="section-header">Needs Improvement</h1>
+				<input type="text" class="input" id="badInput" placeholder="What needs improvement?">
+			</header>
+			<ul id="badList" class="list--plain list--items list--bad"/>
+		</section>
 
-		<button id="vote">Vote</button>
-		<button id="solve">Solve</button>
-		<button id="showPrintable">Printable</button>
+		<button type="button" class="btn--gradient printable">Printable</button>
 	</main>
 
-	<script src="js/app.lib.js"></script>
-	<script src="js/List.js"></script>
-	<script src="js/app.js"></script>
+	<footer class="fade">
+		<small class="text--mute">a Katabelisk production</small>
+	</footer>
+
+<script id="good-template" type="text/x-handlebars-template">
+{{#this}}
+	<li data-id="{{id}}">
+		<div class="view media">
+			<button tabindex="-1" type="button" class="btn--destroy destroy media__end"><span class="destroy__symbol">&times;</span></button>
+			<label class="item media__bd">{{title}}</label>
+		</div>
+		<input class="edit" value="{{title}}">
+	</li>
+{{/this}}
+</script>
+
+<script id="bad-template" type="text/x-handlebars-template">
+{{#this}}
+	<li data-id="{{id}}">
+		<div class="view media">
+			<input type="number" class="votes media__begin" value="{{votes}}">
+			<button tabindex="-1" type="button" class="btn--destroy destroy media__end"><span class="destroy__symbol">&times;</span></button>
+			<label class="item media__bd">{{title}}</label>
+		</div>
+		<input class="edit" value="{{title}}">
+	</li>
+{{/this}}
+</script>
+
+<script src="js/lib/jquery.js"></script>
+<script src="js/lib/handlebars.js"></script>
+<script src="js/app.js"></script>
 </body>

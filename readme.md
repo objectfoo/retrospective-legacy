@@ -2,5 +2,7 @@
 
 little helper for doing sprint retrospectives
 
-### Notes
+### TODO
 
+* save votes to data store
+* printable view
