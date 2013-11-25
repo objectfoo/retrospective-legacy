@@ -12,3 +12,4 @@ little helper for doing sprint retrospectives
 * moz/ie up-down arrows don't increment and decrement votes
 * ie delete symbol is low on the line, line-height fixes?
 * input number element is cutoff, height instead of line-height
+* double fade in on launch
