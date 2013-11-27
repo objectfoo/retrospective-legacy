@@ -1,5 +1,5 @@
 /*jshint unused:false*/
-/*global jQuery, Handlebars*/
+/*global jQuery, Mustache*/
 jQuery(function ($) {
 	'use strict';
 
@@ -45,8 +45,8 @@ jQuery(function ($) {
 			App.$retrospective.addClass('fade--in');
 		},
 		cacheElements: function () {
-			App.goodTemplate = Handlebars.compile($('#good-template').html());
-			App.badTemplate = Handlebars.compile($('#bad-template').html());
+			App.goodTemplate = Mustache.compile($('#good-template').html());
+			App.badTemplate = Mustache.compile($('#bad-template').html());
 			App.$retrospective = $('#retrospective');
 			App.$goodList = $('#goodList');
 			App.$badList = $('#badList');
@@ -84,20 +84,16 @@ jQuery(function ($) {
 			App.$clearAll.on('click', App.clearAll);
 			App.$printable.on('click', function () { alert('TODO'); });
 		},
+		maybeHasEntries: function (list, predicate) {
+			var action = predicate ? 'addClass' : 'removeClass';
+			list[action]('has-entries');
+		},
 		render: function () {
-			if (App.good.length) {
-				App.$goodList.addClass('has-entries');
-			} else {
-				App.$goodList.removeClass('has-entries');
-			}
-			App.$goodList.html(App.goodTemplate(App.good));
+			App.maybeHasEntries(App.$goodList, !!App.good.length);
+			App.$goodList.html(App.goodTemplate(App));
 
-			if (App.bad.length) {
-				App.$badList.addClass('has-entries');
-			} else {
-				App.$badList.removeClass('has-entries');
-			}
-			App.$badList.html(App.badTemplate(App.bad));
+			App.maybeHasEntries(App.$badList, !!App.bad.length);
+			App.$badList.html(App.badTemplate(App));
 
 			Utils.store('retro-good', App.good);
 			Utils.store('retro-bad', App.bad);
