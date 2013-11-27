@@ -41,8 +41,7 @@ jQuery(function ($) {
 			App.bindEvents();
 			App.render();
 
-			$('time').first().text(Utils.todayAsString()).addClass('fade--in');
-			$('footer').first().addClass('fade--in');
+			$('time').first().text(Utils.todayAsString());
 			App.$retrospective.addClass('fade--in');
 		},
 		cacheElements: function () {
