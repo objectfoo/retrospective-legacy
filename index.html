@@ -56,7 +56,7 @@
 {{#bad}}
 	<li data-id="{{id}}">
 		<div class="view media">
-			<input type="number" class="votes media__begin" value="{{votes}}">
+			<input type="number" min="0" class="votes media__begin" value="{{votes}}">
 			<button tabindex="-1" type="button" class="btn--destroy destroy media__end"><span class="destroy__symbol">&times;</span></button>
 			<label class="item media__bd">{{title}}</label>
 		</div>

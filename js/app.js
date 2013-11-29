@@ -30,6 +30,17 @@ jQuery(function ($) {
 			var d = new Date();
 
 			return [d.getMonth() + 1, d.getDay(), d.getFullYear()].join('-');
+		},
+		supportsInputTypeNumber: function () {
+			var el = document.createElement('input'),
+				result = false;
+
+			el.type = 'number';
+			result = el.type !== 'text';
+			el = null;
+
+			Utils.supportsInputTypeNumber = function () { return result; };
+			return Utils.supportsInputTypeNumber();
 		}
 	};
 
@@ -56,33 +67,49 @@ jQuery(function ($) {
 			App.$printable = $('.printable').first();
 		},
 		bindEvents: function () {
-			// render, update store
+			// new item field
 			App.$goodInput.on('keyup', App.create);
 			App.$badInput.on('keyup', App.create);
 
-			// render, update store
+			// destroy button
 			App.$goodList.on('click', '.destroy', App.good, App.clear);
 			App.$badList.on('click', '.destroy', App.bad, App.clear);
 
-			// enter render mode
+			// label
 			App.$goodList.on('dblclick', 'label', App.good, App.edit);
 			App.$badList.on('dblclick', 'label', App.bad, App.edit);
 
-			// exit editing, render, update store
+			// edit field
 			App.$goodList.on('change', '.edit', App.good, App.update);
 			App.$badList.on('change', '.edit, .votes', App.bad, App.update);
-
-			// render
 			App.$goodList.on('keyup', '.edit', App.exitIfEsc);
 			App.$badList.on('keyup', '.edit', App.exitIfEsc);
-
-			// remove editing class
 			App.$goodList.on('blur', '.edit', App.endEditing);
 			App.$badList.on('blur', '.edit', App.endEditing);
 
-			// btn events
+			if (!Utils.supportsInputTypeNumber()) {
+				// number field
+				App.$badList.on('keydown', '.votes', App.good, App.editVote);
+			}
+
+			// Buttons
 			App.$clearAll.on('click', App.clearAll);
 			App.$printable.on('click', function () { alert('TODO'); });
+		},
+		editVote: function (e) {
+			var action = {
+				38: function (target) {
+					target.value = parseInt(target.value, 10) + 1;
+				},
+				40: function (target) {
+					var newVal = Math.max(0, (parseInt(target.value, 10) - 1));
+					target.value = newVal;
+				}
+			};
+
+			if (action[e.which]) {
+				return !!action[e.which](e.target);
+			}
 		},
 		maybeHasEntries: function (list, predicate) {
 			var action = predicate ? 'addClass' : 'removeClass';
@@ -131,7 +158,7 @@ jQuery(function ($) {
 			App.render();
 		},
 		update: function (e) {
-			var newVal = $.trim($(this).val());
+			var newVal = parseInt($.trim($(this).val()), 10) || 0;
 
 			App.getItem(e.data, e.target, function (list, index, obj) {
 				if ($(e.target).hasClass('edit')){
