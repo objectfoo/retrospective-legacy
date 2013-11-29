@@ -76,8 +76,8 @@ jQuery(function ($) {
 			App.$badList.on('click', '.destroy', App.bad, App.clear);
 
 			// label
-			App.$goodList.on('dblclick', 'label', App.good, App.edit);
-			App.$badList.on('dblclick', 'label', App.bad, App.edit);
+			App.$goodList.on('dblclick', '.item', App.good, App.edit);
+			App.$badList.on('dblclick', '.item', App.bad, App.edit);
 
 			// edit field
 			App.$goodList.on('change', '.edit', App.good, App.update);
