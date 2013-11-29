@@ -95,9 +95,12 @@ jQuery(function ($) {
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
 
-			App.$mode.on('click', function () {
-				var $body = $('body');
+			App.$mode.on('click', App.toggleMode);
+		},
+		toggleMode: function () {
+			var $body = $('body');
 
+			if ($body.hasClass('mode-app')) {
 				App.$badList.find('li').each(function () {
 					var $votesLabel,
 						$votesField,
@@ -107,13 +110,10 @@ jQuery(function ($) {
 					$votesLabel = $view.find('.votes-label').first();
 					$votesLabel.text($votesField.val());
 				});
-
-				if ($body.hasClass('mode-app')) {
-					$body.removeClass('mode-app').addClass('mode-print');
-				} else {
-					$body.removeClass('mode-print').addClass('mode-app');
-				}
-			});
+				$body.removeClass('mode-app').addClass('mode-print');
+			} else {
+				$body.removeClass('mode-print').addClass('mode-app');
+			}
 		},
 		editVote: function (e) {
 			var action = {
@@ -177,14 +177,14 @@ jQuery(function ($) {
 			App.render();
 		},
 		update: function (e) {
-			var newVal = parseInt($.trim($(this).val()), 10) || 0;
+			var newVal = $.trim($(this).val());
 
 			App.getItem(e.data, e.target, function (list, index, obj) {
 				if ($(e.target).hasClass('edit')){
 					list[index].title = newVal;
 					App.render();
 				} else {
-					list[index].votes = parseInt(newVal, 10);
+					list[index].votes = parseInt(newVal, 10) || 0;
 					Utils.store('retro-bad', App.bad);
 				}
 			});
