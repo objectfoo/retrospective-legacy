@@ -3,7 +3,7 @@
 <title>Retrospective</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<body>
+<body class="mode-app">
 	<header class="media">
 		<div class="media__end">
 			<button type="button" class="btn--gradient clearAll">Clear All</button>
@@ -33,7 +33,7 @@
 			<ul id="badList" class="list--plain list--items list--bad"/>
 		</section>
 
-		<button type="button" class="btn--gradient printable">Printable</button>
+		<button type="button" class="btn--gradient mode"><span class="print">Print Mode</span><span class="app">App Mode</span></button>
 	</main>
 
 	<footer>
@@ -56,6 +56,7 @@
 {{#bad}}
 	<li data-id="{{id}}">
 		<div class="view media">
+			<label class="votes-label"></label>
 			<input type="number" min="0" class="votes media__begin" value="{{votes}}">
 			<button tabindex="-1" type="button" class="btn--destroy destroy media__end"><span class="destroy__symbol">&times;</span></button>
 			<label class="item media__bd">{{title}}</label>

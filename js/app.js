@@ -64,7 +64,7 @@ jQuery(function ($) {
 			App.$goodInput = $('#goodInput');
 			App.$badInput = $('#badInput');
 			App.$clearAll = $('.clearAll').first();
-			App.$printable = $('.printable').first();
+			App.$mode = $('.mode').first();
 		},
 		bindEvents: function () {
 			// new item field
@@ -94,7 +94,26 @@ jQuery(function ($) {
 
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
-			App.$printable.on('click', function () { alert('TODO'); });
+
+			App.$mode.on('click', function () {
+				var $body = $('body');
+
+				App.$badList.find('li').each(function () {
+					var $votesLabel,
+						$votesField,
+						$view = $(this).find('.view');
+
+					$votesField = $view.find('.votes').first();
+					$votesLabel = $view.find('.votes-label').first();
+					$votesLabel.text($votesField.val());
+				});
+
+				if ($body.hasClass('mode-app')) {
+					$body.removeClass('mode-app').addClass('mode-print');
+				} else {
+					$body.removeClass('mode-print').addClass('mode-app');
+				}
+			});
 		},
 		editVote: function (e) {
 			var action = {
