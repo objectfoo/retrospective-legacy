@@ -31,16 +31,15 @@ jQuery(function ($) {
 
 			return [d.getMonth() + 1, d.getDay(), d.getFullYear()].join('-');
 		},
-		supportsInputTypeNumber: function () {
-			var el = document.createElement('input'),
-				result = false;
+		getItem: function (list, elem, callback) {
+			var id = $(elem).closest('li').data('id');
 
-			el.type = 'number';
-			result = el.type !== 'text';
-			el = null;
-
-			Utils.supportsInputTypeNumber = function () { return result; };
-			return Utils.supportsInputTypeNumber();
+			$.each(list, function (index, obj) {
+				if (obj.id === id) {
+					callback.call(App, list, index, obj);
+					return false;
+				}
+			});
 		}
 	};
 
@@ -87,19 +86,17 @@ jQuery(function ($) {
 			App.$goodList.on('blur', '.edit', App.endEditing);
 			App.$badList.on('blur', '.edit', App.endEditing);
 
-			if (!Utils.supportsInputTypeNumber()) {
-				// number field
-				App.$badList.on('keydown', '.votes', App.good, App.editVote);
-			}
+			// arrow keys in votes field
+			App.$badList.on('keydown', '.votes', App.good, App.editVote);
 
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
-
 			App.$mode.on('click', App.toggleMode);
 		},
 		toggleMode: function () {
 			var $body = $('body');
 
+			// populate votes label for print mode
 			if ($body.hasClass('mode-app')) {
 				App.$badList.find('li').each(function () {
 					var $votesLabel,
@@ -116,18 +113,12 @@ jQuery(function ($) {
 			}
 		},
 		editVote: function (e) {
-			var action = {
-				38: function (target) {
-					target.value = parseInt(target.value, 10) + 1;
-				},
-				40: function (target) {
-					var newVal = Math.max(0, (parseInt(target.value, 10) - 1));
-					target.value = newVal;
-				}
-			};
+			var change = e.which === 38 ? 1 : -1;
 
-			if (action[e.which]) {
-				return !!action[e.which](e.target);
+			if (e.which === 38 || e.which === 40) {
+				e.target.value = Math.max(0, parseInt(e.target.value, 10) + change);
+				e.data = App.bad;
+				App.update.call(e.target, e);
 			}
 		},
 		maybeHasEntries: function (list, predicate) {
@@ -166,7 +157,7 @@ jQuery(function ($) {
 				find('.edit').first().focus();
 		},
 		clear: function (e) {
-			App.getItem(e.data, e.target, function (list, index) {
+			Utils.getItem(e.data, e.target, function (list, index) {
 				list.splice(index, 1);
 			});
 			App.render();
@@ -179,23 +170,13 @@ jQuery(function ($) {
 		update: function (e) {
 			var newVal = $.trim($(this).val());
 
-			App.getItem(e.data, e.target, function (list, index, obj) {
+			Utils.getItem(e.data, e.target, function (list, index, obj) {
 				if ($(e.target).hasClass('edit')){
 					list[index].title = newVal;
 					App.render();
 				} else {
 					list[index].votes = parseInt(newVal, 10) || 0;
 					Utils.store('retro-bad', App.bad);
-				}
-			});
-		},
-		getItem: function (list, elem, callback) {
-			var id = $(elem).closest('li').data('id');
-
-			$.each(list, function (index, obj) {
-				if (obj.id === id) {
-					callback.call(App, list, index, obj);
-					return false;
 				}
 			});
 		},
