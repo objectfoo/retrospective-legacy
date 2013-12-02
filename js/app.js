@@ -29,7 +29,7 @@ jQuery(function ($) {
 		todayAsString: function () {
 			var d = new Date();
 
-			return [d.getMonth() + 1, d.getDay(), d.getFullYear()].join('-');
+			return [d.getMonth() + 1, d.getDate(), d.getFullYear()].join('-');
 		},
 		getItem: function (list, elem, callback) {
 			var id = $(elem).closest('li').data('id');
