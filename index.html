@@ -19,7 +19,7 @@
 	<main id="retrospective" class="fade">
 		<section>
 			<header>
-				<h1 class="section-header">Went Well</h1>
+				<h1 class="section-title">Went Well</h1>
 				<input type="text" class="input" id="goodInput" placeholder="What went well?">
 			</header>
 			<ul id="goodList" class="list--plain list--items"></ul>
@@ -27,7 +27,7 @@
 
 		<section>
 			<header>
-				<h1 class="section-header">Needs Improvement</h1>
+				<h1 class="section-title">Needs Improvement</h1>
 				<input type="text" class="input" id="badInput" placeholder="What needs improvement?">
 			</header>
 			<ul id="badList" class="list--plain list--items list--bad"></ul>
@@ -56,7 +56,7 @@
 {{#bad}}
 	<li data-id="{{id}}">
 		<div class="view media">
-			<label class="votes-label"></label>
+			<span class="votes-label"></span>
 			<input type="text" class="votes media__begin" value="{{votes}}">
 			<button tabindex="-1" type="button" class="btn--destroy destroy media__end">&times;</button>
 			<label class="item media__bd">{{title}}</label>

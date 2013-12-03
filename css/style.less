@@ -20,10 +20,18 @@
 		display: none;
 	}
 
-	ul   { list-style-type: circle; }
+	ul   { list-style-type: bullet; }
 	time { float: right; }
 	.app { display: block; }
 	.votes-label { margin-right: 8px; font-weight: bold; }
+
+	button.mode,
+	footer {
+		-ms-user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+	}
 }
 
 .mode-app {
@@ -140,15 +148,16 @@
 	.time-retrospective {
 		width: 85px;
 	}
-	.section-header {
+	.section-title {
 		.rgbaGradient(#846e64, 0.8, #65544c, 0.8);
 		border: 1px solid #6c615c;
 		box-shadow: inset 1px 1px 2px rgba(220,220,220, 0.6);
 		border-top-left-radius: 2px;
 		border-top-right-radius: 2px;
-
+	
 		color: #2D2420;
 		color: rgba(45,36,32, 0.85);
+		font-size: 18px;
 		text-shadow: 1px 1px rgba(255,255,255, 0.3);
 
 		padding: 4px 8px;
