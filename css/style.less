@@ -79,28 +79,37 @@
 	.fade {
 		opacity: 0;
 		&--in {
-		transition: opacity 500ms ease-in-out;
+		transition: opacity 250ms ease-in-out;
 			opacity: 1;
 		}
 	}
 
 	.btn--destroy {
-		background: none;
-		border: none;
-		float: right;
-		height: 36px;
-		width: 36px;
+		font-family: Arial, sans-serif;
+		padding: 9px;
+		cursor: pointer;
+		background: transparent;
+		border: 0;
+		-webkit-appearance: none;
+		font-size: 21px;
+		font-weight: bold;
+		line-height: 1;
+		text-shadow: 0 1px 0 #fff;
+		opacity: 0.2;
+		filter: alpha(opacity=20);
+		transition: opacity 100ms linear;
 
-		// kill annoying focus ring falling outside LI
-		margin-top: 3px;
-		margin-right: 2px;
+		&:hover {
+			opacity: .5;
+			filter: alpha(opacity=50);
+		}
 	}
 
 	.list--items {
 		background: #fff;
 		border: 1px solid #999;
 		border-width: 0;
-		li            {	padding-left: 8px;}
+		li            {	padding: 0 8px;}
 		li + li       { border-top: 1px solid #999; }
 		&.has-entries { border-width: 0px 1px 1px 1px; }
 	}
@@ -109,18 +118,6 @@
 	.app,
 	.votes-label {
 		display: none;
-	}
-
-	.destroy__symbol {
-		color: lighten(rgb(45, 36, 32), 50%);
-		font-family: arial, sans-serif;
-		font-size: 20px;
-		transition: color 100ms linear;
-
-		button:hover & {
-			color: rgb(45, 36, 32);
-			font-weight: bolder;
-		}
 	}
 
 	.btn--gradient {
@@ -186,12 +183,8 @@
 	.edit {
 		padding: 9px 0;
 		font-size: 16px;
-		width: 95%;
+		width: 100%;
 		display: none;
-	}
-
-	.list--bad .edit {
-		margin-left: 44px;
 	}
 
 	.is-editing .edit {
