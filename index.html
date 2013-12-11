@@ -66,6 +66,27 @@
 {{/bad}}
 </script>
 
+<script type="text/html" id="printable-item">
+<ul>
+{{#items}}
+	<li>{{#votes}}{{votes}} {{/votes}}{{title}}</li>
+{{/items}}
+</ul>
+</script>
+
+<script type="text/html" id="printable-main">
+<h1>Went Well</h1>
+{{#good}}
+	{{>list}}
+{{/good}}
+
+<h1>Needs Improvement</h1>
+{{#bad}}
+	{{>list}}
+{{/bad}}
+<br>
+</script>
+
 <script src="js/lib/jquery.min.js"></script>
 <script src="js/lib/mustache.min.js"></script>
 <script src="js/app.js"></script>

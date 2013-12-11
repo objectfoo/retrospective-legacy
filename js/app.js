@@ -91,26 +91,14 @@ jQuery(function ($) {
 
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
-			App.$mode.on('click', App.toggleMode);
+			App.$mode.on('click', App.showPrintable);
 		},
-		toggleMode: function () {
-			var $body = $('body');
+		showPrintable: function () {
+			var main = $('#printable-main').html(),
+				part = $('#printable-item').html(),
+				data = { good: { items: App.good }, bad: { items: App.bad } };
 
-			// populate votes label for print mode
-			if ($body.hasClass('mode-app')) {
-				App.$badList.find('li').each(function () {
-					var $votesLabel,
-						$votesField,
-						$view = $(this).find('.view');
-
-					$votesField = $view.find('.votes').first();
-					$votesLabel = $view.find('.votes-label').first();
-					$votesLabel.text($votesField.val());
-				});
-				$body.removeClass('mode-app').addClass('mode-print');
-			} else {
-				$body.removeClass('mode-print').addClass('mode-app');
-			}
+			document.write( Mustache.render( main, data, { list: part } ) );
 		},
 		editVote: function (e) {
 			var change = e.which === 38 ? 1 : -1;
