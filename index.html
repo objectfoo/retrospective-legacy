@@ -33,58 +33,53 @@
 			<ul id="badList" class="list--plain list--items list--bad"></ul>
 		</section>
 
+		<section>
+			<header>
+				<h1 class="section-title">Next time</h1>
+				<input type="text" class="input" id="nextInput" placeholder="What should we try next time?">
+			</header>
+			<ul id="nextList" class="list--plain list--items list--next"></ul>
+		</section>
+
 		<button type="button" class="btn--gradient mode"><span class="print">Print Mode</span><span class="app">App Mode</span></button>
 	</main>
 
 	<footer>
-		<small class="text--mute">a Katabelisk production</small>
+		<small class="text--mute">a Katabelisk production, Retrospective v4</small>
 	</footer>
 
-<script id="good-template" type="text/html">
-{{#good}}
+<script type="text/html" id="item-template" >
+{{#items}}
 	<li data-id="{{id}}">
 		<div class="view media">
-			<button tabindex="-1" type="button" class="btn--destroy destroy media__end"><span class="destroy__symbol">&times;</span></button>
-			<label class="item media__bd">{{title}}</label>
-		</div>
-		<input class="edit" value="{{title}}">
-	</li>
-{{/good}}
-</script>
-
-<script id="bad-template" type="text/html">
-{{#bad}}
-	<li data-id="{{id}}">
-		<div class="view media">
-			<span class="votes-label"></span>
-			<input type="text" class="votes media__begin" value="{{votes}}">
+			{{#hasVotes}}
+				<span class="votes-label"></span>
+				<input type="text" class="votes media__begin" value="{{votes}}">
+			{{/hasVotes}}
 			<button tabindex="-1" type="button" class="btn--destroy destroy media__end">&times;</button>
 			<label class="item media__bd">{{title}}</label>
 		</div>
 		<input class="edit" value="{{title}}">
 	</li>
-{{/bad}}
+{{/items}}
 </script>
 
 <script type="text/html" id="printable-item">
-<ul>
 {{#items}}
-	<li>{{#votes}}{{votes}} {{/votes}}{{title}}</li>
+	- {{#hasVotes}}{{votes}} {{/hasVotes}}{{title}}<br>
 {{/items}}
-</ul>
+<br>
 </script>
 
 <script type="text/html" id="printable-main">
-<h1>Went Well</h1>
-{{#good}}
-	{{>list}}
-{{/good}}
+<strong>Went Well</strong><br>
+{{#good}}{{>list}}{{/good}}
 
-<h1>Needs Improvement</h1>
-{{#bad}}
-	{{>list}}
-{{/bad}}
-<br>
+<strong>Needs Improvement</strong><br>
+{{#bad}}{{>list}}{{/bad}}
+
+<strong>Next Time</strong><br>
+{{#next}}{{>list}}{{/next}}
 </script>
 
 <script src="js/lib/jquery.min.js"></script>

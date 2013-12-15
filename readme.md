@@ -4,6 +4,7 @@ little helper for doing sprint retrospectives
 
 ### TODO
 
+* refactor list into it's own module
 
 ### Bugs
 
