@@ -1,11 +1,9 @@
-/*jshint unused:false*/
 /*global jQuery, Mustache*/
 jQuery(function ($) {
 	'use strict';
 
 	var Utils = {
 		uuid: function () {
-			/*jshint bitwise:false */
 			var i, random, uuid = '';
 
 			for (i = 0; i < 32; i++) {
@@ -47,21 +45,27 @@ jQuery(function ($) {
 		init: function () {
 			App.good = Utils.store('retro-good');
 			App.bad = Utils.store('retro-bad');
-			App.cacheElements();
+			App.next = Utils.store('retro-next');
+
+			App.cacheElems();
 			App.bindEvents();
 			App.render();
 
 			$('.time-retrospective').first().text(Utils.todayAsString());
 			App.$retrospective.addClass('fade--in');
 		},
-		cacheElements: function () {
-			App.goodTemplate = Mustache.compile($('#good-template').html());
-			App.badTemplate = Mustache.compile($('#bad-template').html());
+		cacheElems: function () {
+			App.itemTemplate = Mustache.compile($('#item-template').html());
 			App.$retrospective = $('#retrospective');
+
 			App.$goodList = $('#goodList');
 			App.$badList = $('#badList');
+			App.$nextList = $('#nextList');
+
 			App.$goodInput = $('#goodInput');
 			App.$badInput = $('#badInput');
+			App.$nextInput = $('#nextInput');
+
 			App.$clearAll = $('.clearAll').first();
 			App.$mode = $('.mode').first();
 		},
@@ -69,22 +73,30 @@ jQuery(function ($) {
 			// new item field
 			App.$goodInput.on('keyup', App.create);
 			App.$badInput.on('keyup', App.create);
+			App.$nextInput.on('keyup', App.create);
 
 			// destroy button
 			App.$goodList.on('click', '.destroy', App.good, App.clear);
 			App.$badList.on('click', '.destroy', App.bad, App.clear);
+			App.$nextList.on('click', '.destroy', App.next, App.clear);
 
 			// label
 			App.$goodList.on('dblclick', '.item', App.good, App.edit);
 			App.$badList.on('dblclick', '.item', App.bad, App.edit);
+			App.$nextList.on('dblclick', '.item', App.next, App.edit);
 
 			// edit field
 			App.$goodList.on('change', '.edit', App.good, App.update);
 			App.$badList.on('change', '.edit, .votes', App.bad, App.update);
+			App.$nextList.on('change', '.edit', App.next, App.update);
+
 			App.$goodList.on('keyup', '.edit', App.exitIfEsc);
 			App.$badList.on('keyup', '.edit', App.exitIfEsc);
+			App.$nextList.on('keyup', '.edit', App.exitIfEsc);
+
 			App.$goodList.on('blur', '.edit', App.endEditing);
 			App.$badList.on('blur', '.edit', App.endEditing);
+			App.$nextList.on('blur', '.edit', App.endEditing);
 
 			// arrow keys in votes field
 			App.$badList.on('keydown', '.votes', App.good, App.editVote);
@@ -96,8 +108,13 @@ jQuery(function ($) {
 		showPrintable: function () {
 			var main = $('#printable-main').html(),
 				part = $('#printable-item').html(),
-				data = { good: { items: App.good }, bad: { items: App.bad } };
+				data = {
+					good: { items: App.good },
+					bad: { items: App.bad },
+					next: { items: App.next }
+				};
 
+			/*jshint evil:true*/
 			document.write( Mustache.render( main, data, { list: part } ) );
 		},
 		editVote: function (e) {
@@ -109,19 +126,23 @@ jQuery(function ($) {
 				App.update.call(e.target, e);
 			}
 		},
-		maybeHasEntries: function (list, predicate) {
+		maybeAddHasEntriesClass: function (list, predicate) {
 			var action = predicate ? 'addClass' : 'removeClass';
 			list[action]('has-entries');
 		},
 		render: function () {
-			App.maybeHasEntries(App.$goodList, !!App.good.length);
-			App.$goodList.html(App.goodTemplate(App));
+			App.maybeAddHasEntriesClass(App.$goodList, !!App.good.length);
+			App.$goodList.html(App.itemTemplate({items: App.good}));
 
-			App.maybeHasEntries(App.$badList, !!App.bad.length);
-			App.$badList.html(App.badTemplate(App));
+			App.maybeAddHasEntriesClass(App.$badList, !!App.bad.length);
+			App.$badList.html(App.itemTemplate({items: App.bad}));
+
+			App.maybeAddHasEntriesClass(App.$nextList, !!App.next.length);
+			App.$nextList.html(App.itemTemplate({items: App.next}));
 
 			Utils.store('retro-good', App.good);
 			Utils.store('retro-bad', App.bad);
+			Utils.store('retro-next', App.next);
 		},
 		create: function (e) {
 			var $input = $(this),
@@ -134,12 +155,14 @@ jQuery(function ($) {
 			if (this.id === 'goodInput') {
 				App.good.unshift({id: Utils.uuid(), title: val});
 			} else if (this.id === 'badInput') {
-				App.bad.unshift({id: Utils.uuid(), title: val, votes: 0});
+				App.bad.unshift({id: Utils.uuid(), title: val, votes: 0, hasVotes: true});
+			} else if (this.id === 'nextInput') {
+				App.next.unshift({id: Utils.uuid(), title: val});
 			}
 			$input.val('');
 			App.render();
 		},
-		edit: function (e) {
+		edit: function () {
 			$(this).closest('li').
 				addClass('is-editing').
 				find('.edit').first().focus();
@@ -153,12 +176,13 @@ jQuery(function ($) {
 		clearAll: function () {
 			App.good.length = 0;
 			App.bad.length = 0;
+			App.next.length = 0;
 			App.render();
 		},
 		update: function (e) {
 			var newVal = $.trim($(this).val());
 
-			Utils.getItem(e.data, e.target, function (list, index, obj) {
+			Utils.getItem(e.data, e.target, function (list, index) {
 				if ($(e.target).hasClass('edit')){
 					list[index].title = newVal;
 					App.render();
