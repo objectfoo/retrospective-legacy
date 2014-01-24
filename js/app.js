@@ -109,6 +109,7 @@ jQuery(function ($) {
 			var main = $('#printable-main').html(),
 				part = $('#printable-item').html(),
 				data = {
+					date: Utils.todayAsString(),
 					good: { items: App.good },
 					bad: { items: App.bad },
 					next: { items: App.next }
