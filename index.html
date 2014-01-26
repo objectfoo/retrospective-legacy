@@ -1,15 +1,16 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Retrospective</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <body class="mode-app">
 	<header class="media">
-		<div class="media__end">
-			<button type="button" class="btn--gradient clearAll">Clear All</button>
-		</div>
-		<div class="media__begin text--right">
+		<div class="pull-left">
 			<span class="time-retrospective text--mute">[today's date]</span>
+		</div>
+		<div class="pull-right">
+			<button type="button" class="btn--gradient clearAll">Clear All</button>
 		</div>
 		<div class="media__bd">
 			<h1 class="page-title">Retrospective</h1>
@@ -19,7 +20,6 @@
 	<main id="retrospective" class="fade">
 		<section>
 			<header>
-				<h1 class="section-title">Went Well</h1>
 				<input type="text" class="input" id="goodInput" placeholder="What went well?">
 			</header>
 			<ul id="goodList" class="list--plain list--items"></ul>
@@ -27,18 +27,16 @@
 
 		<section>
 			<header>
-				<h1 class="section-title">Needs Improvement</h1>
 				<input type="text" class="input" id="badInput" placeholder="What needs improvement?">
 			</header>
-			<ul id="badList" class="list--plain list--items list--bad"></ul>
+			<ul id="badList" class="list--plain list--items"></ul>
 		</section>
 
 		<section>
 			<header>
-				<h1 class="section-title">Next time</h1>
 				<input type="text" class="input" id="nextInput" placeholder="What should we try next time?">
 			</header>
-			<ul id="nextList" class="list--plain list--items list--next"></ul>
+			<ul id="nextList" class="list--plain list--items"></ul>
 		</section>
 
 		<button type="button" class="btn--gradient mode"><span class="print">Print Mode</span><span class="app">App Mode</span></button>
@@ -50,16 +48,16 @@
 
 <script type="text/html" id="item-template" >
 {{#items}}
-	<li data-id="{{id}}">
-		<div class="view media">
+	<li data-id="{{id}}" class="media">
+		<div class="view">
 			{{#hasVotes}}
 				<span class="votes-label"></span>
-				<input type="text" class="votes media__begin" value="{{votes}}">
+				<input type="text" class="votes pull-left" value="{{votes}}">
 			{{/hasVotes}}
-			<button tabindex="-1" type="button" class="btn--destroy destroy media__end">&times;</button>
+			<button tabindex="-1" type="button" class="btn--destroy destroy pull-right">&times;</button>
 			<label class="item media__bd">{{title}}</label>
 		</div>
-		<input class="edit" value="{{title}}">
+		<input class="edit" type="text" value="{{title}}">
 	</li>
 {{/items}}
 </script>
