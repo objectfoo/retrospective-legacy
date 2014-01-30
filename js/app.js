@@ -81,7 +81,7 @@ jQuery(function ($) {
 			App.$nextList.on('click', '.destroy', App.next, App.clear);
 
 			// increment button
-			App.$badList.on('click', '.js-incrementVote', App.bad, App.incrementVote);
+			App.$badList.on('click', '.btn--increment', App.bad, App.incrementVote);
 
 			// label
 			App.$goodList.on('dblclick', '.item', App.good, App.edit);

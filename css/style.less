@@ -42,6 +42,7 @@ section { margin: 0 0 @gutter 0; }
 
 .pull-left  { float: left; }
 .pull-right { float: right; }
+.bold { font-weight: 800; }
 
 // ----------------------------------------------------------------------------
 .media,
@@ -90,7 +91,7 @@ section { margin: 0 0 @gutter 0; }
       color: @gray;
     }
 
-    &:hover .js-incrementVote {
+    &:hover .btn--increment {
       display: block;
     }
   }
@@ -104,15 +105,11 @@ section { margin: 0 0 @gutter 0; }
   }
 }
 
-.js-incrementVote {
-  display: none;
-  position: absolute;
-  top: 3px;
-  left: 4px;
+.btn--increment {
 }
 
 .btn {
-  font-family: arial, sans-serif;
+  font-family: inherit;
   cursor: pointer;
   -webket-user-select: none;
   user-select: none;
@@ -128,7 +125,7 @@ section { margin: 0 0 @gutter 0; }
   .rgbaGradient(#fff, 0.8, #e4dedb, 0.8);
   border-radius: 2px;
   border: 1px solid @border;
-  padding: 9px 12px;
+  padding: 8px 12px;
 
   &:hover {
     background: darken(#fff, 10%);
@@ -140,7 +137,21 @@ section { margin: 0 0 @gutter 0; }
   }
 }
 
+.btn--increment {
+  font-family: monospace;
+  font-size: 24px;
+  font-weight: 900;
+  display: none;
+  position: absolute;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  top: 3px;
+  left: 4px;
+}
+
 .btn--destroy {
+  font-family: arial, sans-serif;
   padding: 9px;
   cursor: pointer;
   background: transparent;
@@ -166,10 +177,6 @@ section { margin: 0 0 @gutter 0; }
 .clearAll,
 .time-retrospective {
   width: 85px;
-}
-
-.clearAll {
-  margin-top: 9px;
 }
 
 .input {
@@ -200,11 +207,11 @@ section { margin: 0 0 @gutter 0; }
   font-style: italic;
   display: block;
   text-align: left;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .edit {
-  padding: 9px 0;
+  padding: 9px 3px;
   font-size: 16px;
   width: 100%;
   display: none;
