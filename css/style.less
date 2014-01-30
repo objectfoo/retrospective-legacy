@@ -1,5 +1,5 @@
 @border: #d5d5d5;
-@gray: #B2A8A4;
+@gray: darken(#B2A8A4, 15%);
 @gutter: 21px;
 
 .rgbaGradient(@startColor, @startAlpha, @endColor, @endAlpha) {
@@ -105,9 +105,6 @@ section { margin: 0 0 @gutter 0; }
   }
 }
 
-.btn--increment {
-}
-
 .btn {
   font-family: inherit;
   cursor: pointer;
@@ -135,6 +132,10 @@ section { margin: 0 0 @gutter 0; }
   &:focus {
     box-shadow: inset 0 0 2px rgba(0, 0, 250, .5);
   }
+
+  &:active {
+    background: darken(#fff, 20%);
+  }
 }
 
 .btn--increment {
@@ -148,6 +149,7 @@ section { margin: 0 0 @gutter 0; }
   width: 32px;
   top: 3px;
   left: 4px;
+  color: @gray;
 }
 
 .btn--destroy {
