@@ -21,7 +21,7 @@
 
 body {
   font: 15px/1.4 'Open Sans', Arial, sans-serif;
-  max-width: 750px;
+  max-width: 800px;
   min-width: 320px;
   margin: 0 auto;
   background: #f0f0f0;
@@ -77,16 +77,21 @@ section { margin: 0 0 @gutter 0; }
   .pull-left { margin-right: 8px; }
 
   li {
-    padding: 0 8px 0 18px;
+    position: relative;
+    padding: 0 8px 0 40px;
 
     &:before {
       content: counter(alphas, upper-alpha);
       counter-increment: alphas;
       position: absolute;
-      left: 4px;
+      left: 15px;
       top: 8px;
       font-size: 16px;
       color: @gray;
+    }
+
+    &:hover .js-incrementVote {
+      display: block;
     }
   }
 }
@@ -97,6 +102,13 @@ section { margin: 0 0 @gutter 0; }
   transition: opacity 250ms ease-in-out;
     opacity: 1;
   }
+}
+
+.js-incrementVote {
+  display: none;
+  position: absolute;
+  top: 3px;
+  left: 4px;
 }
 
 .btn {
