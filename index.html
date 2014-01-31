@@ -10,7 +10,7 @@
 			<span class="time-retrospective text--mute">[today's date]</span>
 		</div>
 		<div class="pull-right">
-			<button type="button" class="btn--gradient clearAll">Clear All</button>
+			<button type="button" class="btn btn--gradient clearAll">Clear All</button>
 		</div>
 		<div class="media__bd">
 			<h1 class="page-title">Retrospective</h1>
@@ -39,23 +39,26 @@
 			<ul id="nextList" class="list--plain list--items"></ul>
 		</section>
 
-		<button type="button" class="btn--gradient mode"><span class="print">Print Mode</span><span class="app">App Mode</span></button>
+		<button type="button" class="btn btn--gradient mode"><span class="print">Print Mode</span><span class="app">App Mode</span></button>
 	</main>
 
 	<footer>
-		<small class="text--mute">a Katabelisk production, Retrospective v4.1</small>
+		<small class="text--mute">a Katabelisk production, Retrospective v4.2</small>
 	</footer>
 
 <script type="text/html" id="item-template" >
 {{#items}}
-	<li data-id="{{id}}" class="media">
-		<div class="view">
+	<li data-id="{{id}}">
+		<div class="view media">
+			<div class="pull-left">
 			{{#hasVotes}}
-				<span class="votes-label"></span>
-				<input type="text" class="votes pull-left" value="{{votes}}">
+				<input type="text" class="votes" value="{{votes}}"><button type="button" class="btn btn--bordered btn--gradient btn--increment">+</button>
 			{{/hasVotes}}
-			<button tabindex="-1" type="button" class="btn--destroy destroy pull-right">&times;</button>
-			<label class="item media__bd">{{title}}</label>
+			</div>
+			<div class="media__bd">
+				<button tabindex="-1" type="button" class="btn btn--destroy destroy pull-right">&times;</button>
+				<label class="item ">{{title}}</label>
+			</div>
 		</div>
 		<input class="edit" type="text" value="{{title}}">
 	</li>

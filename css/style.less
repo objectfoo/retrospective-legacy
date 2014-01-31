@@ -1,4 +1,5 @@
 @border: #d5d5d5;
+@gray: darken(#B2A8A4, 15%);
 @gutter: 21px;
 
 .rgbaGradient(@startColor, @startAlpha, @endColor, @endAlpha) {
@@ -20,7 +21,7 @@
 
 body {
   font: 15px/1.4 'Open Sans', Arial, sans-serif;
-  max-width: 750px;
+  max-width: 800px;
   min-width: 320px;
   margin: 0 auto;
   background: #f0f0f0;
@@ -41,6 +42,7 @@ section { margin: 0 0 @gutter 0; }
 
 .pull-left  { float: left; }
 .pull-right { float: right; }
+.bold { font-weight: 800; }
 
 // ----------------------------------------------------------------------------
 .media,
@@ -57,8 +59,42 @@ section { margin: 0 0 @gutter 0; }
 }
 
 .list--plain {
-  margin: 0;
   list-style-type: none;
+}
+
+.list--items {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-width: 0;
+  li { padding: 0 8px; }
+  li + li       { border-top: 1px solid #ccc; }
+  &.has-entries { border-width: 0px 1px 1px 1px; }
+}
+
+#badList {
+  counter-reset: alphas;
+  position: relative;
+
+  .pull-left { margin-right: 8px; }
+
+  li {
+    position: relative;
+    padding: 0 8px 0 40px;
+
+    &:before {
+      content: counter(alphas, upper-alpha);
+      counter-increment: alphas;
+      position: absolute;
+      left: 15px;
+      top: 8px;
+      font-size: 16px;
+      color: @gray;
+    }
+
+    &:hover .btn--increment {
+      display: block;
+    }
+  }
 }
 
 .fade {
@@ -69,8 +105,55 @@ section { margin: 0 0 @gutter 0; }
   }
 }
 
+.btn {
+  font-family: inherit;
+  cursor: pointer;
+  -webket-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+.btn--bordered {
+  border: 1px solid @border;
+  border-radius: 2px;
+}
+
+.btn--gradient {
+  .rgbaGradient(#fff, 0.8, #e4dedb, 0.8);
+  border-radius: 2px;
+  border: 1px solid @border;
+  padding: 8px 12px;
+
+  &:hover {
+    background: darken(#fff, 10%);
+    border-color: darken(@border, 12%);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 2px rgba(0, 0, 250, .5);
+  }
+
+  &:active {
+    background: darken(#fff, 20%);
+  }
+}
+
+.btn--increment {
+  font-family: monospace;
+  font-size: 24px;
+  font-weight: 900;
+  display: none;
+  position: absolute;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  top: 3px;
+  left: 4px;
+  color: @gray;
+}
+
 .btn--destroy {
-  font-family: Arial, sans-serif;
+  font-family: arial, sans-serif;
   padding: 9px;
   cursor: pointer;
   background: transparent;
@@ -88,44 +171,14 @@ section { margin: 0 0 @gutter 0; }
   }
 }
 
-.list--items {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-width: 0;
-  li            { padding: 0 8px;}
-  li + li       { border-top: 1px solid #ccc; }
-  &.has-entries { border-width: 0px 1px 1px 1px; }
-}
-
 // ----------------------------------------------------------------------------
-.app,
-.votes-label {
+.app {
   display: none;
 }
 
-.btn--gradient {
-  .rgbaGradient(#fff, 0.8, #e4dedb, 0.8);
-  border-radius: 2px;
-  border: 1px solid @border;
-  outline: none;
-  padding: 8px 12px;
-
-  &:hover {
-    background: darken(#fff, 10%);
-    border-color: darken(@border, 12%);
-  }
-
-  &:focus {
-    box-shadow: inset 0 0 2px rgba(0, 0, 250, .5);
-  }
-}
 .clearAll,
 .time-retrospective {
   width: 85px;
-}
-
-.clearAll {
-  margin-top: 9px;
 }
 
 .input {
@@ -145,7 +198,7 @@ section { margin: 0 0 @gutter 0; }
 }
 
 .page-title {
-  color: #B2A8A4;
+  color: @gray;
   text-shadow: 1px 1px 2px #fff;
   text-align: center;
   overflow: hidden;
@@ -156,11 +209,11 @@ section { margin: 0 0 @gutter 0; }
   font-style: italic;
   display: block;
   text-align: left;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .edit {
-  padding: 9px 0;
+  padding: 9px 3px;
   font-size: 16px;
   width: 100%;
   display: none;
@@ -179,10 +232,11 @@ section { margin: 0 0 @gutter 0; }
 }
 
 .votes {
+  vertical-align: bottom;
   width: 32px;
   font-size: 16px;
   padding: 6px 0;
-  margin: 3px 6px 0 0;
+  margin: 3px 3px 0 0;
   border: 1px solid @border;
   text-align: center;
 }

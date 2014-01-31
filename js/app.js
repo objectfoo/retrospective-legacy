@@ -80,6 +80,9 @@ jQuery(function ($) {
 			App.$badList.on('click', '.destroy', App.bad, App.clear);
 			App.$nextList.on('click', '.destroy', App.next, App.clear);
 
+			// increment button
+			App.$badList.on('click', '.btn--increment', App.bad, App.incrementVote);
+
 			// label
 			App.$goodList.on('dblclick', '.item', App.good, App.edit);
 			App.$badList.on('dblclick', '.item', App.bad, App.edit);
@@ -99,7 +102,7 @@ jQuery(function ($) {
 			App.$nextList.on('blur', '.edit', App.endEditing);
 
 			// arrow keys in votes field
-			App.$badList.on('keydown', '.votes', App.good, App.editVote);
+			App.$badList.on('keydown', '.votes', App.editVote);
 
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
@@ -126,6 +129,13 @@ jQuery(function ($) {
 				e.data = App.bad;
 				App.update.call(e.target, e);
 			}
+		},
+		incrementVote: function (e) {
+			var $votes =  $(this).siblings('input.votes');
+
+			$votes.val(parseInt($votes.val(), 10) + 1);
+			e.target = $votes.get(0);
+			App.update.call($votes.get(0), e);
 		},
 		maybeAddHasEntriesClass: function (list, predicate) {
 			var action = predicate ? 'addClass' : 'removeClass';
