@@ -21,9 +21,6 @@ jQuery(function ($) {
 
 			return (store && JSON.parse(store)) || [];
 		},
-		clearStore: function () {
-			localStorage.clear();
-		},
 		todayAsString: function () {
 			var d = new Date();
 
@@ -68,6 +65,7 @@ jQuery(function ($) {
 
 			App.$clearAll = $('.clearAll').first();
 			App.$mode = $('.mode').first();
+			App.$sort = $('.sort').first();
 		},
 		bindEvents: function () {
 			// new item field
@@ -107,6 +105,20 @@ jQuery(function ($) {
 			// Buttons
 			App.$clearAll.on('click', App.clearAll);
 			App.$mode.on('click', App.showPrintable);
+			App.$sort.on('click', function () {
+				var bad = App.$badList.find('li');
+
+				bad.sort(function (a, b) {
+					var A = parseInt($(a).find('input.votes').val(), 10);
+					var B = parseInt($(b).find('input.votes').val(), 10);
+
+					return A - B;
+				});
+
+				$.each(bad, function (idx, item) {
+					App.$badList.append(item);
+				});
+			});
 		},
 		showPrintable: function () {
 			var main = $('#printable-main').html(),
