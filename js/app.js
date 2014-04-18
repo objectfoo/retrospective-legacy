@@ -106,18 +106,17 @@ jQuery(function ($) {
 			App.$clearAll.on('click', App.clearAll);
 			App.$mode.on('click', App.showPrintable);
 			App.$sort.on('click', function () {
-				var bad = App.$badList.find('li');
+				var bad = Utils.store('retro-bad');
 
 				bad.sort(function (a, b) {
-					var A = parseInt($(a).find('input.votes').val(), 10);
-					var B = parseInt($(b).find('input.votes').val(), 10);
+					var A = a.votes;
+					var B = b.votes;
 
 					return A - B;
 				});
 
-				$.each(bad, function (idx, item) {
-					App.$badList.append(item);
-				});
+				Utils.store('retro-bad', bad);
+				App.$badList.html(App.itemTemplate({items: bad}));
 			});
 		},
 		showPrintable: function () {
