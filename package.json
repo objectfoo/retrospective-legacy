@@ -1,0 +1,30 @@
+{
+  "name": "retrospective",
+  "version": "1.0.0",
+  "description": "retrospective tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-js": "watchify src/js/index.jsx -t [reactify] -o dist/app.js -dv"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/objectfoo/retrospective.git"
+  },
+  "author": "satake <satake@objectfoo.com> (https://github.com/objectfoo)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/objectfoo/retrospective/issues"
+  },
+  "homepage": "https://github.com/objectfoo/retrospective",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "envify": "^3.4.0",
+    "es6-promise": "^2.0.1",
+    "react": "^0.13.1",
+    "reactify": "^1.1.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.1.0"
+  }
+}

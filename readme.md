@@ -2,6 +2,13 @@
 
 little helper for doing sprint retrospectives
 
-### TODO
+The react re-write.
 
-* cleanup/simplify code out of app object
+## References
+
+http://blog.andrewray.me/flux-for-stupid-people/
+
+http://blogs.atlassian.com/2014/08/flux-architecture-step-by-step/
+
+
+
