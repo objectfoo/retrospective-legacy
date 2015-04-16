@@ -3,6 +3,14 @@
 var React = require('react');
 
 var Header = React.createClass({
+	getDefaultProps: function() {
+		var d = (new Date()).toJSON();
+
+		d = d.replace(/T.*/, '');
+
+		return {date: d};
+	},
+
 	render: function() {
 		return(
 			<header>

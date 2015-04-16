@@ -1,12 +1,12 @@
 'use strict';
 
 var React = require('react');
-var HeaderContainer = require('./HeaderContainer.jsx');
+var Header = require('./Header.jsx');
 
 var Retrospective = React.createClass({
 	render: function() {
 		return(
-			<HeaderContainer />
+			<Header />
 			// list
 			// list with voting
 			// sort button, print button
