@@ -23,6 +23,8 @@
     "browserify": "^9.0.8",
     "envify": "^3.4.0",
     "es6-promise": "^2.0.1",
+    "event-emitter": "^0.3.3",
+    "flux": "^2.0.1",
     "react": "^0.13.1",
     "reactify": "^1.1.0",
     "uglifyify": "^3.0.1",

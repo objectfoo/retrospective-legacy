@@ -3,6 +3,7 @@
 var React = require('react');
 var Header = require('./Header.jsx');
 var List = require('./List.jsx');
+var Footer = require('./Footer.jsx');
 
 var Retrospective = React.createClass({
 	render: function() {
@@ -12,14 +13,10 @@ var Retrospective = React.createClass({
 				<List id="good" />
 				<List id="bad" />
 				<List id="next" />
+				<Footer />
 			</div>
 		);
 	}
 });
-
-// list
-// list with voting
-// sort button, print button
-// list
 
 module.exports = Retrospective;
