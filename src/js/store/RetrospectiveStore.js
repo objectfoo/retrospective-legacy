@@ -1,5 +1,6 @@
 'use strict';
 
+var sampleData = require('../sampleData.json');
 var AppDispatcher = require('../AppDispatcher');
 var eventEmitter = require('event-emitter');
 var KEY_STORAGE = 'retrospective-react';
@@ -10,7 +11,7 @@ function RetrospectiveStore() {
 	AppDispatcher.register(doAction);
 
 	if (storeIsEmpty()) {
-		setStorage(sampleData());
+		setStorage(sampleData);
 	}
 }
 
@@ -43,32 +44,12 @@ function doAction(payload) {
 		break;
 
 		case 'sample-data':
-			setStorage(sampleData());
+			setStorage(sampleData);
 			exports.emit('change');
 		break;
 	}
 
 	return true;
-}
-
-function sampleData() {
-	return {
-		good: [
-			{id: 1, text: 'one'},
-			{id: 2, text: 'two'},
-			{id: 3, text: 'three'}
-		],
-		bad: [
-			{id: 10, text: 'four'},
-			{id: 20, text: 'five'},
-			{id: 30, text: 'six'}
-		],
-		next: [
-			{id: 100, text: 'seven'},
-			{id: 200, text: 'eight'},
-			{id: 300, text: 'nine'}
-		]
-	};
 }
 
 exports = module.exports = new RetrospectiveStore();

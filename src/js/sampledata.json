@@ -1,0 +1,17 @@
+{
+	"good": [
+		{"id": 1, "text": "one"},
+		{"id": 2, "text": "two"},
+		{"id": 3, "text": "three"}
+	],
+	"bad": [
+		{"id": 10, "text": "four"},
+		{"id": 20, "text": "five"},
+		{"id": 30, "text": "six"}
+	],
+	"next": [
+		{"id": 100, "text": "seven"},
+		{"id": 200, "text": "eight"},
+		{"id": 300, "text": "nine"}
+	]
+}
