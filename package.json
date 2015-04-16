@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "browserify": "browserify src/js/index.jsx -t [reactify] > dist/app.js",
     "watch-js": "watchify src/js/index.jsx -t [reactify] -o dist/app.js -dv"
   },
   "repository": {
