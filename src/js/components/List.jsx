@@ -2,8 +2,6 @@
 
 var React = require('react');
 var Store = require('../store/RetrospectiveStore');
-var AppDispatcher = require('../AppDispatcher');
-var actionNames = require('../constants').actions;
 var listActions = require('./listActions');
 
 var List = React.createClass({
@@ -29,7 +27,7 @@ var List = React.createClass({
 		var items = Store.getAll()[this.props.id] || [], html;
 
 		html = items.map(function(item) {
-			return <li onClick={ this.handleClick } key={item.id}>{item.text}</li>;
+			return (<li onClick={ this.handleClick } key={item.id}>{item.text}</li>);
 		}, this);
 
 		return (

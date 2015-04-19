@@ -20,11 +20,11 @@ var Header = React.createClass({
 	render: function() {
 		return(
 			<header>
-				<h1 className="pull-left">Retrospective <small>ReactJS version</small></h1>
-				<button onClick={ this.sampleData } className="pull-right">Sample</button>&nbsp;
-				<button onClick={ this.clearAll } className="pull-right">Clear All</button>
+				<h1 className='pull-left'>Retrospective <small>ReactJS version</small></h1>
+				<button onClick={ this.sampleData } className='pull-right'>Sample</button>&nbsp;
+				<button onClick={ this.clearAll } className='pull-right'>Clear All</button>
 				<hr />
-				<div className="pull-right">{ this.props.date }</div>
+				<div className='pull-right'>{ this.props.date }</div>
 			</header>
 		);
 	}

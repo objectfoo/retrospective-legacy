@@ -8,11 +8,11 @@ var Footer = require('./Footer.jsx');
 var Retrospective = React.createClass({
 	render: function() {
 		return(
-			<div className="retrospective">
+			<div className='retrospective'>
 				<Header />
-				<List id="good" />
-				<List id="bad" />
-				<List id="next" />
+				<List id='good' />
+				<List id='bad' />
+				<List id='next' />
 				<Footer />
 			</div>
 		);
