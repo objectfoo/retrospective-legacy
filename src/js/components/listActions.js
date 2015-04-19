@@ -1,7 +1,7 @@
 'use strict';
 
 var Dispatcher = require('../AppDispatcher');
-var actionNames = require('../constants').actions;
+var actionTypes = require('../retrospectiveConstants').actionTypes;
 
 module.exports = {
 	updateList: updateList
@@ -9,7 +9,7 @@ module.exports = {
 
 function updateList(id) {
 	Dispatcher.dispatch({
-		eventName: actionNames.updateList,
+		actionType: actionTypes.updateList,
 		id: id
 	});
 }

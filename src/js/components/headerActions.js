@@ -1,7 +1,7 @@
 'use strict';
 
 var Dispatcher = require('../AppDispatcher');
-var actionNames = require('../constants').actions;
+var actionTypes = require('../retrospectiveConstants').actionTypes;
 
 module.exports = {
 	clearAll: clearAll,
@@ -9,9 +9,9 @@ module.exports = {
 };
 
 function clearAll() {
-	Dispatcher.dispatch({ eventName: actionNames.clearAll });
+	Dispatcher.dispatch({ actionType: actionTypes.clearAll });
 }
 
 function sampleData() {
-	Dispatcher.dispatch({ eventName: actionNames.sampleData });
+	Dispatcher.dispatch({ actionType: actionTypes.sampleData });
 }

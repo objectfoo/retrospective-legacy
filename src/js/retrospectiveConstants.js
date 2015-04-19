@@ -3,7 +3,7 @@
 module.exports = {
 	KEY_STORAGE: 'retrospective-react',
 
-	actions: {
+	actionTypes: {
 		clearAll: 'clear-all',
 		sampleData: 'sample-data',
 		updateList: 'update-list'

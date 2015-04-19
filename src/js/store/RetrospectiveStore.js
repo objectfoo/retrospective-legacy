@@ -4,8 +4,8 @@ var sampleData = require('../sampleData.json');
 var AppDispatcher = require('../AppDispatcher');
 var eventEmitter = require('event-emitter');
 
-var KEY_STORAGE = require('../constants').KEY_STORAGE;
-var actionNames = require('../constants').actions;
+var KEY_STORAGE = require('../retrospectiveConstants').KEY_STORAGE;
+var actionTypes = require('../retrospectiveConstants').actionTypes;
 
 var storage;
 
@@ -40,18 +40,18 @@ function getStorage() {
 }
 
 function doAction(payload) {
-	switch (payload.eventName) {
-		case actionNames.clearAll:
+	switch (payload.actionType) {
+		case actionTypes.clearAll:
 			clearStorage();
 			exports.emit('change:all');
 		break;
 
-		case actionNames.sampleData:
+		case actionTypes.sampleData:
 			setStorage(sampleData);
 			exports.emit('change:all');
 		break;
 
-		case actionNames.updateList:
+		case actionTypes.updateList:
 			// do someting
 			console.log('pay', payload);
 			exports.emit('change:' + payload.id);
