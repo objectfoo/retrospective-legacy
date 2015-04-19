@@ -4,7 +4,7 @@
   "description": "retrospective tool",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "opn src/index.html",
     "browserify": "browserify src/js/index.jsx -t [reactify] > dist/app.js",
     "watch-js": "watchify src/js/index.jsx -t [reactify] -o dist/app.js -dv"
   },
@@ -25,6 +25,7 @@
     "es6-promise": "^2.0.1",
     "event-emitter": "^0.3.3",
     "flux": "^2.0.1",
+    "opn": "^1.0.1",
     "react": "^0.13.1",
     "reactify": "^1.1.0",
     "uglifyify": "^3.0.1",
