@@ -1,19 +1,11 @@
 'use strict';
 
 var React = require('react');
-var AppDispatcher = require('../AppDispatcher');
+var actions = require('./headerActions');
 
 var Header = React.createClass({
-	sampleData: function() {
-		AppDispatcher.dispatch({
-			eventName: 'sample-data'
-		});
-	},
-	clearAll: function() {
-		AppDispatcher.dispatch({
-			eventName: 'reset-all'
-		});
-	},
+	sampleData: actions.sampleData,
+	clearAll: actions.clearAll,
 
 	getDefaultProps: function() {
 		var d = (new Date()).toJSON(), dParts;

@@ -3,7 +3,10 @@
 var sampleData = require('../sampleData.json');
 var AppDispatcher = require('../AppDispatcher');
 var eventEmitter = require('event-emitter');
-var KEY_STORAGE = 'retrospective-react';
+
+var KEY_STORAGE = require('../constants').KEY_STORAGE;
+var actionNames = require('../constants').actions;
+
 var storage;
 
 function RetrospectiveStore() {
@@ -38,14 +41,20 @@ function getStorage() {
 
 function doAction(payload) {
 	switch (payload.eventName) {
-		case 'reset-all':
+		case actionNames.clearAll:
 			clearStorage();
-			exports.emit('change');
+			exports.emit('change:all');
 		break;
 
-		case 'sample-data':
+		case actionNames.sampleData:
 			setStorage(sampleData);
-			exports.emit('change');
+			exports.emit('change:all');
+		break;
+
+		case actionNames.updateList:
+			// do someting
+			console.log('pay', payload);
+			exports.emit('change:' + payload.id);
 		break;
 	}
 
