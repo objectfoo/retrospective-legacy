@@ -2,6 +2,8 @@
 
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
+var EntryText = require('./EntryText.jsx');
+var EntryInput = require('./EntryInput.jsx');
 
 var Entries = React.createClass({
 
@@ -9,18 +11,22 @@ var Entries = React.createClass({
 		var data = this.props.store.getAll()[this.props.list] || [], enries;
 
 		enries = data.map(function(item) {
-			var editing = item.isEditing ? 'editing ' : '';
+			var content,
+				onDoubleClick = this.setEditable.bind(this, item.id);
 
-			return <li onClick={ this.setEditable.bind(this, item.id) } key={item.id}>
-				{editing}{item.text}
+			if (item.isEditing) {
+				content = <EntryInput {...this.props}/>;
+			}
+			else {
+				content = <EntryText text={item.text} {...this.props}/>;
+			}
+
+			return <li onDoubleClick={ onDoubleClick } key={item.id}>
+				{content}
 			</li>;
 		}, this);
 
-		return (
-			<ul id={this.props.list}>
-				{enries}
-			</ul>
-		);
+		return <ul id={this.props.list}>{enries}</ul>;
 	},
 
 	handleChange: function() {

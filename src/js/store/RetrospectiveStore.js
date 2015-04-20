@@ -38,7 +38,7 @@ function doAction(payload) {
 		break;
 
 		case actionTypes.editItem:
-			toggleEditing(payload.list, payload.itemId)
+			toggleEditing(payload.list, payload.itemId);
 		break;
 	}
 
