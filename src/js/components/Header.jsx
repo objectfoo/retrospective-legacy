@@ -1,12 +1,25 @@
 'use strict';
 
+
 var React = require('react');
-var actions = require('./headerActions');
+var actionTypes = require('../retrospectiveConstants').actionTypes;
 
 var Header = React.createClass({
-	sampleData: actions.sampleData,
-	clearAll: actions.clearAll,
 
+	// RENDER
+	render: function() {
+		return(
+			<header>
+				<h1 className='pull-left'>Retrospective <small>ReactJS version</small></h1>
+				<button onClick={ this.fillSampleData } className='pull-right'>Sample</button>&nbsp;
+				<button onClick={ this.clearAll } className='pull-right'>Clear All</button>
+				<hr />
+				<div className='pull-right'>{ this.props.date }</div>
+			</header>
+		);
+	},
+
+	// LIFECYCLE
 	getDefaultProps: function() {
 		var d = (new Date()).toJSON(), dParts;
 
@@ -17,17 +30,15 @@ var Header = React.createClass({
 		return { date: dParts.join('/') };
 	},
 
-	render: function() {
-		return(
-			<header>
-				<h1 className='pull-left'>Retrospective <small>ReactJS version</small></h1>
-				<button onClick={ this.sampleData } className='pull-right'>Sample</button>&nbsp;
-				<button onClick={ this.clearAll } className='pull-right'>Clear All</button>
-				<hr />
-				<div className='pull-right'>{ this.props.date }</div>
-			</header>
-		);
+	// ACTIONS
+	fillSampleData: function() {
+		this.props.dispatcher.dispatch({ actionType: actionTypes.sampleData });
+	},
+
+	clearAll: function() {
+		this.props.dispatcher.dispatch({ actionType: actionTypes.clearAll });
 	}
+
 });
 
 module.exports = Header;

@@ -1,17 +1,17 @@
 {
 	"good": [
-		{"id": 1, "text": "one"},
-		{"id": 2, "text": "two"},
-		{"id": 3, "text": "three"}
+		{"id": 1, "text": "one", "isEditing": false},
+		{"id": 2, "text": "two", "isEditing": false},
+		{"id": 3, "text": "three", "isEditing": false}
 	],
 	"bad": [
-		{"id": 10, "text": "four"},
-		{"id": 20, "text": "five"},
-		{"id": 30, "text": "six"}
+		{"id": 10, "text": "four", "isEditing": false},
+		{"id": 20, "text": "five", "isEditing": false},
+		{"id": 30, "text": "six", "isEditing": false}
 	],
 	"next": [
-		{"id": 100, "text": "seven"},
-		{"id": 200, "text": "eight"},
-		{"id": 300, "text": "nine"}
+		{"id": 100, "text": "seven", "isEditing": false},
+		{"id": 200, "text": "eight", "isEditing": false},
+		{"id": 300, "text": "nine", "isEditing": false}
 	]
 }
