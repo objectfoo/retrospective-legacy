@@ -4,8 +4,8 @@ var sampleData = require('../sampleData.json');
 var AppDispatcher = require('../AppDispatcher');
 var eventEmitter = require('event-emitter');
 
-var KEY_STORAGE = require('../retrospectiveConstants').KEY_STORAGE;
-var actionTypes = require('../retrospectiveConstants').actionTypes;
+var KEY_STORAGE = require('../constants').KEY_STORAGE;
+var actionTypes = require('../constants').actionTypes;
 
 var storage;
 
@@ -31,19 +31,17 @@ function doAction(payload) {
 	switch (payload.actionType) {
 		case actionTypes.clearAll:
 			clearStorage();
-			// exports.emit('change:all');
 		break;
 
 		case actionTypes.sampleData:
 			setStorage(sampleData);
-			// exports.emit('change:all');
 		break;
 
 		case actionTypes.editItem:
-			setEditing(payload.list, payload.itemId)
-			// exports.emit('change:all');
+			toggleEditing(payload.list, payload.itemId)
 		break;
 	}
+
 	exports.emit('change:all');
 	return true;
 }
@@ -65,11 +63,12 @@ function getStorage() {
 }
 
 
-function setEditing(list, id) {
+function toggleEditing(list, id) {
 	var store = getStorage();
 
 	store[list].forEach(function(item) {
-		item.isEditing = item.id === id ? true : false;
+		item.isEditing = item.id === id ? !item.isEditing : false;
+
 		return item;
 	});
 

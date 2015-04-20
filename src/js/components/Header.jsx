@@ -2,7 +2,7 @@
 
 
 var React = require('react');
-var actionTypes = require('../retrospectiveConstants').actionTypes;
+var actionTypes = require('../constants').actionTypes;
 
 var Header = React.createClass({
 

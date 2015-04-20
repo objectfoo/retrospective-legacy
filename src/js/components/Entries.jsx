@@ -1,14 +1,14 @@
 'use strict';
 
 var React = require('react');
-var actionTypes = require('../retrospectiveConstants').actionTypes;
+var actionTypes = require('../constants').actionTypes;
 
 var Entries = React.createClass({
 
 	render: function() {
-		var items = this.props.store.getAll()[this.props.list] || [], html;
+		var data = this.props.store.getAll()[this.props.list] || [], enries;
 
-		html = items.map(function(item) {
+		enries = data.map(function(item) {
 			var editing = item.isEditing ? 'editing ' : '';
 
 			return <li onClick={ this.setEditable.bind(this, item.id) } key={item.id}>
@@ -18,7 +18,7 @@ var Entries = React.createClass({
 
 		return (
 			<ul id={this.props.list}>
-				{html}
+				{enries}
 			</ul>
 		);
 	},
