@@ -2,31 +2,20 @@
 
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
-var EntryText = require('./EntryText.jsx');
-var EntryInput = require('./EntryInput.jsx');
+var Entry = require('./Entry.jsx');
 
 var Entries = React.createClass({
 
 	render: function() {
-		var data = this.props.store.getAll()[this.props.list] || [], enries;
+		var entries, data;
 
-		enries = data.map(function(item) {
-			var content,
-				onDoubleClick = this.setEditable.bind(this, item.id);
+		data = this.props.store.getAll()[this.props.list] || [];
 
-			if (item.isEditing) {
-				content = <EntryInput {...this.props}/>;
-			}
-			else {
-				content = <EntryText text={item.text} {...this.props}/>;
-			}
-
-			return <li onDoubleClick={ onDoubleClick } key={item.id}>
-				{content}
-			</li>;
+		entries = data.map(function(item) {
+			return <Entry {...this.props} key={item.id} item={item} />;
 		}, this);
 
-		return <ul id={this.props.list}>{enries}</ul>;
+		return <ul id={this.props.list}>{entries}</ul>;
 	},
 
 	handleChange: function() {
@@ -44,12 +33,9 @@ var Entries = React.createClass({
 		this.props.store.off('change:' + this.props.list, this.handleChange);
 	},
 
-
 	// ACTIONS
 	setEditable: function (itemId) {
-		var dispatcher = this.props.dispatcher;
-
-		dispatcher.dispatch({
+		this.props.dispatcher.dispatch({
 			actionType: actionTypes.editItem,
 			list: this.props.list,
 			itemId: itemId
