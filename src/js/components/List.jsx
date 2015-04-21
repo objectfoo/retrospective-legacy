@@ -2,7 +2,6 @@
 
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
-var Entry = require('./Entry.jsx');
 
 var Entries = React.createClass({
 
@@ -31,16 +30,39 @@ var Entries = React.createClass({
 	componentWillUnmount: function() {
 		this.props.store.off('change:all', this.handleChange);
 		this.props.store.off('change:' + this.props.list, this.handleChange);
+	}
+
+});
+
+
+/**
+ * Entry
+ */
+var Entry = React.createClass({
+	render: function() {
+		var item = this.props.item,
+			content;
+
+		if (item.isEditing) {
+			content = <div>
+				<input type="text" /> <button type="button">Save</button>
+			</div>;
+		}
+		else {
+			content = item.text;
+		}
+
+		return <li onDoubleClick={this.setEditable}>{content}</li>;
 	},
 
-	// ACTIONS
-	setEditable: function (itemId) {
+	setEditable: function() {
 		this.props.dispatcher.dispatch({
 			actionType: actionTypes.editItem,
 			list: this.props.list,
-			itemId: itemId
+			itemId: this.props.item.id
 		});
 	}
 });
+
 
 module.exports = Entries;
