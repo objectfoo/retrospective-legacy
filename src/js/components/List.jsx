@@ -39,13 +39,23 @@ var Entries = React.createClass({
  * Entry
  */
 var Entry = React.createClass({
+	getInitialState: function() {
+		return {text: this.props.item.text};
+	},
+
 	render: function() {
 		var item = this.props.item,
 			content;
 
 		if (item.isEditing) {
 			content = <div>
-				<input type="text" /> <button type="button">Save</button>
+				<input
+					type="text"
+					value={this.state.text}
+					onChange={this.handleChange}
+					onBlur={this.handleSubmit}
+					/>
+				<button type="button">Save</button>
 			</div>;
 		}
 		else {
@@ -53,6 +63,20 @@ var Entry = React.createClass({
 		}
 
 		return <li onDoubleClick={this.setEditable}>{content}</li>;
+	},
+
+
+	// ACTIONS
+	handleSubmit: function(evt) {
+		var val = this.state.text.trim();
+		
+		console.log('save');
+	},
+
+	handleChange: function(evt) {
+		this.setState({
+			text: evt.target.value
+		});
 	},
 
 	setEditable: function() {
