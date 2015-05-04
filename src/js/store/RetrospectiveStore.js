@@ -9,7 +9,6 @@ var actionTypes = require('../constants').actionTypes;
 
 var storage;
 
-
 function RetrospectiveStore() {
 	storage = global.localStorage;
 	AppDispatcher.register(doAction);
@@ -48,6 +47,12 @@ function doAction(payload) {
 			updateItem(payload.list, payload.itemId, payload.value);
 			exports.emit('change:' + payload.list);
 		break;
+
+		case actionTypes.addItem:
+			addItem(payload.list, payload.value);
+			exports.emit('change:' + payload.list);
+		break;
+
 	}
 
 	return true;
@@ -56,7 +61,11 @@ function doAction(payload) {
 
 function clearStorage() {
 	storage.removeItem(KEY_STORAGE);
-	storage.setItem(KEY_STORAGE, JSON.stringify({}));
+	storage.setItem(KEY_STORAGE, JSON.stringify({
+		good: [],
+		bad: [],
+		next: []
+	}));
 }
 
 
@@ -103,11 +112,38 @@ function updateItem(list, id, value) {
 }
 
 
+function addItem(list, value) {
+	var store = getStorage()
+		;
+	console.log(list, value);
+	store[list].unshift({
+		id: newUuid(),
+		text: value,
+		isEditing: false
+	});
+
+	setStorage(store);
+}
 
 
+function newUuid() {
+	/*jshint bitwise:false */
+	var uuid = ''
+		, i = 0
+		, random
+		;
 
+	for (; i < 32; i++) {
+		random = Math.random() * 16 | 0;
+		if (i === 8 || i === 12 || i === 16 || i === 20) {
+			uuid += '-';
+		}
+		uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random))
+			.toString(16);
+	}
 
-
+	return uuid;
+}
 
 
 

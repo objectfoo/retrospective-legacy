@@ -34,13 +34,18 @@ var Entry = React.createClass({
 		return { text: this.props.item.text };
 	},
 
-	componentDidUpdate: function(oldProps) {
+	componentDidUpdate: function(nextProps) {
 		var newProps = this.props;
 
 		if (newProps.item.isEditing === true
-				&& oldProps.item.isEditing === false) {
+				&& nextProps.item.isEditing === false) {
 			this.refs.EntryText.getDOMNode().select();
 		}
+	},
+
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return this.state.text !== nextState.text
+				|| this.props.item.isEditing !== nextProps.item.isEditing;
 	},
 
 	// ACTIONS

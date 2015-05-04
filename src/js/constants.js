@@ -7,6 +7,7 @@ module.exports = {
 		clearAll: 'clear-all',
 		sampleData: 'sample-data',
 		editItem: 'edit-item',
-		updateItem: 'update-item'
+		updateItem: 'update-item',
+		addItem: 'add-item'
 	}
 };
