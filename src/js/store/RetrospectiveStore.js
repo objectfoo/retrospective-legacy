@@ -31,18 +31,25 @@ function doAction(payload) {
 	switch (payload.actionType) {
 		case actionTypes.clearAll:
 			clearStorage();
+			exports.emit('change:all');
 		break;
 
 		case actionTypes.sampleData:
 			setStorage(sampleData);
+			exports.emit('change:all');
 		break;
 
 		case actionTypes.editItem:
 			toggleEditing(payload.list, payload.itemId);
+			exports.emit('change:all');
+		break;
+
+		case actionTypes.updateItem:
+			updateItem(payload.list, payload.itemId, payload.value);
+			exports.emit('change:' + payload.list);
 		break;
 	}
 
-	exports.emit('change:all');
 	return true;
 }
 
@@ -75,6 +82,36 @@ function toggleEditing(list, id) {
 	setStorage(store);
 	return true;
 }
+
+
+function updateItem(list, id, value) {
+	var store = getStorage()
+		, data = store[list]
+		;
+
+	for (var i = data.length - 1; i >= 0; i--) {
+
+		if (data[i].id === id) {
+			data[i].text = value;
+			data[i].isEditing = false;
+			break;
+		}
+	}
+
+	setStorage(store);
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 exports = module.exports = new RetrospectiveStore();

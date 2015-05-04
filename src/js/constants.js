@@ -6,6 +6,7 @@ module.exports = {
 	actionTypes: {
 		clearAll: 'clear-all',
 		sampleData: 'sample-data',
-		editItem: 'edit-item'
+		editItem: 'edit-item',
+		updateItem: 'update-item'
 	}
 };
