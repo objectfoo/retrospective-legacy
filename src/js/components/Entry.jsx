@@ -3,11 +3,9 @@
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
 var RETURN_KEY = 13;
+var ESCAPE_KEY = 27;
 
 var Entry = React.createClass({
-	getInitialState: function() {
-		return { text: this.props.item.text };
-	},
 
 	render: function() {
 		var content
@@ -20,14 +18,29 @@ var Entry = React.createClass({
 		}
 		else {
 			content = <div>
-				<input ref="EntryText" type="text" value={text}
-					onChange={this.handleChange} onBlur={this.handleBlur}
-					onKeyPress={this.handleKeypress} />
+				<input ref="EntryText" type="text"
+					value={text}
+					onChange={this.handleChange}
+					onBlur={this.handleBlur}
+					onKeyDown={this.handleKeyDown} />
 				<button onClick={this.handleSubmit} type="button">Save</button>
 			</div>;
 		}
 
 		return <li onDoubleClick={this.handleDoubleClick}>{content}</li>;
+	},
+
+	getInitialState: function() {
+		return { text: this.props.item.text };
+	},
+
+	componentDidUpdate: function(oldProps) {
+		var newProps = this.props;
+
+		if (newProps.item.isEditing === true
+				&& oldProps.item.isEditing === false) {
+			this.refs.EntryText.getDOMNode().select();
+		}
 	},
 
 	// ACTIONS
@@ -39,11 +52,16 @@ var Entry = React.createClass({
 		this.setState({ text: evt.target.value.trim() });
 	},
 
-	handleKeypress: function(evt) {
+	handleKeyDown: function(evt) {
 		if (evt.which === RETURN_KEY) {
 			this.setState({ text: this.refs.EntryText.getDOMNode().value.trim() });
 			this.handleSubmit();
-			evt.preventDefault();
+		} else if (evt.which === ESCAPE_KEY) {
+			this.props.dispatcher.dispatch({
+				actionType: actionTypes.editItem,
+				list: this.props.list,
+				itemId: this.props.item.id
+			});
 		}
 	},
 
