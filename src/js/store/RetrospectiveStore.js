@@ -1,10 +1,9 @@
 'use strict';
 
 var sampleData = require('../sampleData.json');
-var AppDispatcher = require('../AppDispatcher');
 var eventEmitter = require('event-emitter');
 
-var KEY_STORAGE = require('../constants').KEY_STORAGE;
+var STORE_KEY = require('../constants').STORE_KEY;
 var actionTypes = require('../constants').actionTypes;
 
 module.exports = function(dispatcher) {
@@ -14,7 +13,7 @@ module.exports = function(dispatcher) {
 function RetrospectiveStore(dispatcher) {
 	dispatcher.register(doAction.bind(this));
 
-	if (global.localStorage.getItem(KEY_STORAGE) === null) {
+	if (global.localStorage.getItem(STORE_KEY) === null) {
 		setStorage(sampleData);
 	}
 }
@@ -57,8 +56,8 @@ function doAction(payload) {
 }
 
 function clearStorage() {
-	global.localStorage.removeItem(KEY_STORAGE);
-	global.localStorage.setItem(KEY_STORAGE, JSON.stringify({
+	global.localStorage.removeItem(STORE_KEY);
+	global.localStorage.setItem(STORE_KEY, JSON.stringify({
 		good: [],
 		bad: [],
 		next: []
@@ -67,12 +66,12 @@ function clearStorage() {
 
 
 function setStorage(d) {
-	global.localStorage.setItem(KEY_STORAGE, JSON.stringify(d));
+	global.localStorage.setItem(STORE_KEY, JSON.stringify(d));
 }
 
 
 function getStorage() {
-	return JSON.parse(global.localStorage.getItem(KEY_STORAGE));
+	return JSON.parse(global.localStorage.getItem(STORE_KEY));
 }
 
 
