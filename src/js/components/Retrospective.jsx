@@ -1,8 +1,9 @@
 'use strict';
 
 var React = require('react')
-, store = require('../store/RetrospectiveStore')
-, dispatcher = require('../AppDispatcher')
+, Dispatcher = require('flux').Dispatcher
+, dispatcher = new Dispatcher()
+, store = require('../store/RetrospectiveStore')(dispatcher)
 
 , Header = require('./Header.jsx')
 , Entries = require('./Entries.jsx')

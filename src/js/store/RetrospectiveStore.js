@@ -7,22 +7,20 @@ var eventEmitter = require('event-emitter');
 var KEY_STORAGE = require('../constants').KEY_STORAGE;
 var actionTypes = require('../constants').actionTypes;
 
-var storage;
+module.exports = function(dispatcher) {
+	return new RetrospectiveStore(dispatcher);
+};
 
-function RetrospectiveStore() {
-	storage = global.localStorage;
-	AppDispatcher.register(doAction);
+function RetrospectiveStore(dispatcher) {
+	dispatcher.register(doAction.bind(this));
 
-	if (storage.getItem(KEY_STORAGE) === null) {
+	if (global.localStorage.getItem(KEY_STORAGE) === null) {
 		setStorage(sampleData);
 	}
 }
 
-
-RetrospectiveStore.prototype = eventEmitter({
-	getAll: getStorage
-});
-
+RetrospectiveStore.prototype = eventEmitter({});
+RetrospectiveStore.prototype.getAll = getStorage;
 
 function doAction(payload) {
 	console.log('RetrospectiveStore:doAction()', payload);
@@ -30,27 +28,27 @@ function doAction(payload) {
 	switch (payload.actionType) {
 		case actionTypes.clearAll:
 			clearStorage();
-			exports.emit('change:all');
+			this.emit('change:all');
 		break;
 
 		case actionTypes.sampleData:
 			setStorage(sampleData);
-			exports.emit('change:all');
+			this.emit('change:all');
 		break;
 
 		case actionTypes.editItem:
 			toggleEditing(payload.list, payload.itemId);
-			exports.emit('change:all');
+			this.emit('change:all');
 		break;
 
 		case actionTypes.updateItem:
 			updateItem(payload.list, payload.itemId, payload.value);
-			exports.emit('change:' + payload.list);
+			this.emit('change:' + payload.list);
 		break;
 
 		case actionTypes.addItem:
 			addItem(payload.list, payload.value);
-			exports.emit('change:' + payload.list);
+			this.emit('change:' + payload.list);
 		break;
 
 	}
@@ -58,10 +56,9 @@ function doAction(payload) {
 	return true;
 }
 
-
 function clearStorage() {
-	storage.removeItem(KEY_STORAGE);
-	storage.setItem(KEY_STORAGE, JSON.stringify({
+	global.localStorage.removeItem(KEY_STORAGE);
+	global.localStorage.setItem(KEY_STORAGE, JSON.stringify({
 		good: [],
 		bad: [],
 		next: []
@@ -70,12 +67,12 @@ function clearStorage() {
 
 
 function setStorage(d) {
-	storage.setItem(KEY_STORAGE, JSON.stringify(d));
+	global.localStorage.setItem(KEY_STORAGE, JSON.stringify(d));
 }
 
 
 function getStorage() {
-	return JSON.parse(storage.getItem(KEY_STORAGE));
+	return JSON.parse(global.localStorage.getItem(KEY_STORAGE));
 }
 
 
@@ -115,7 +112,7 @@ function updateItem(list, id, value) {
 function addItem(list, value) {
 	var store = getStorage()
 		;
-	console.log(list, value);
+
 	store[list].unshift({
 		id: newUuid(),
 		text: value,
@@ -144,10 +141,3 @@ function newUuid() {
 
 	return uuid;
 }
-
-
-
-
-
-
-exports = module.exports = new RetrospectiveStore();
