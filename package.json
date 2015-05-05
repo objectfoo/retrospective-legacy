@@ -5,10 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "opn src/index.html",
-    "browserify": "npm run react-prod && browserify src/js/app.jsx -t [reactify] -g [uglifyify] -x react -o dist/app.js",
-    "react-prod": "browserify -r react -t [envify --NODE_ENV production] -g [uglifyify] > dist/vendor.js",
-    "react": "browserify -r react > dist/vendor.js",
-    "watch-js": "npm run react && watchify src/js/app.jsx -t [reactify] -x react -o dist/app.js -dv"
+    "browserify": "browserify src/js/app.jsx -t [reactify] -g [uglifyify] -o dist/app.js",
+    "watch-js": "watchify src/js/app.jsx -t [reactify] -o dist/app.js -dv"
   },
   "repository": {
     "type": "git",
