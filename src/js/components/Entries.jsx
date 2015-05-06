@@ -71,6 +71,4 @@ var Entries = React.createClass({
 
 });
 
-
-
 module.exports = Entries;

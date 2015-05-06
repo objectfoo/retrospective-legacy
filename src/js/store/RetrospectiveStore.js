@@ -4,13 +4,14 @@ var K = require('../constants');
 var eventEmitter = require('event-emitter');
 var uuid = require('./utils').uuid;
 var sampleData = require('../sampleData.json');
+var storage = require('./utils').storage;
 
 module.exports = function(dispatcher) {
 	var ee = eventEmitter({
-		getAll: getStorage
+		getAll: storage
 	});
 
-	if (getStorage() === null) {
+	if (storage() === null) {
 		clearStorage();
 	}
 
@@ -38,7 +39,7 @@ function doAction(payload) {
 		break;
 
 		case K.actionTypes.sampleData:
-			setStorage(sampleData);
+			storage(sampleData);
 			message = 'change:all';
 		break;
 
@@ -62,6 +63,7 @@ function doAction(payload) {
 			message = 'change:' + payload.list;
 		break;
 	}
+
 	return message;
 }
 
@@ -109,9 +111,10 @@ function removeItem(listName, id) {
 }
 
 function modifyStore(listName, fn) {
-	var store = getStorage();
+	var store = storage();
+	
 	fn(store[listName]);
-	setStorage(store);
+	storage(store);
 }
 
 
@@ -120,17 +123,7 @@ function modifyStore(listName, fn) {
  */
 function clearStorage() {
 	global.localStorage.removeItem(K.STORE_KEY);
-	setStorage({ good: [], bad: [], next: [] });
-}
-
-
-function setStorage(d) {
-	global.localStorage.setItem(K.STORE_KEY, JSON.stringify(d));
-}
-
-
-function getStorage() {
-	return JSON.parse(global.localStorage.getItem(K.STORE_KEY));
+	storage({ good: [], bad: [], next: [] });
 }
 
 

@@ -1,5 +1,5 @@
 'use strict';
-
+var K = require('../constants');
 var exports = module.exports = {};
 
 exports.uuid = function() {
@@ -20,3 +20,12 @@ exports.uuid = function() {
 
 	return uuid;
 }
+
+exports.storage = function(d) {
+	if (d) {
+		return global.localStorage.setItem(K.STORE_KEY, JSON.stringify(d));
+	}
+	var store = global.localStorage.getItem(K.STORE_KEY);
+
+	return store && JSON.parse(store);
+};
