@@ -1,142 +1,162 @@
 'use strict';
 
-var sampleData = require('../sampleData.json');
+var K = require('../constants');
 var eventEmitter = require('event-emitter');
-
-var STORE_KEY = require('../constants').STORE_KEY;
-var actionTypes = require('../constants').actionTypes;
+var uuid = require('./utils').uuid;
+var sampleData = require('../sampleData.json');
 
 module.exports = function(dispatcher) {
-	return new RetrospectiveStore(dispatcher);
+	var ee = eventEmitter({
+		getAll: getStorage
+	});
+
+	if (getStorage() === null) {
+		clearStorage();
+	}
+
+	dispatcher.register(function(payload) {
+		var message = doAction(payload);
+
+		if (message) {
+			ee.emit(message);
+		}
+
+		return true;
+	});
+
+	return ee;
 };
 
-function RetrospectiveStore(dispatcher) {
-	dispatcher.register(doAction.bind(this));
-
-	if (global.localStorage.getItem(STORE_KEY) === null) {
-		setStorage(sampleData);
-	}
-}
-
-RetrospectiveStore.prototype = eventEmitter({});
-RetrospectiveStore.prototype.getAll = getStorage;
 
 function doAction(payload) {
-	console.log('RetrospectiveStore:doAction()', payload);
-
+	var message = null;
+	
 	switch (payload.actionType) {
-		case actionTypes.clearAll:
+		case K.actionTypes.clearAll:
 			clearStorage();
-			this.emit('change:all');
+			message = 'change:all';
 		break;
 
-		case actionTypes.sampleData:
+		case K.actionTypes.sampleData:
 			setStorage(sampleData);
-			this.emit('change:all');
+			message = 'change:all';
 		break;
 
-		case actionTypes.editItem:
+		case K.actionTypes.editItem:
 			toggleEditing(payload.list, payload.itemId);
-			this.emit('change:all');
+			message = 'change:all';
 		break;
 
-		case actionTypes.updateItem:
+		case K.actionTypes.updateItem:
 			updateItem(payload.list, payload.itemId, payload.value);
-			this.emit('change:' + payload.list);
+			message = 'change:' + payload.list;
 		break;
 
-		case actionTypes.addItem:
+		case K.actionTypes.addItem:
 			addItem(payload.list, payload.value);
-			this.emit('change:' + payload.list);
+			message = 'change:' + payload.list;
 		break;
 
+		case K.actionTypes.removeItem:
+			removeItem(payload.list, payload.itemId);
+			message = 'change:' + payload.list;
+		break;
 	}
-
-	return true;
+	return message;
 }
 
+
+/**
+ * Actions
+ */
+function toggleEditing(listName, id) {
+	modifyStore(listName, function(list) {
+		list.map(setEditing(id));
+	});
+}
+
+
+function updateItem(listName, id, value) {
+	modifyStore(listName, function(list) {
+		list.filter(eqId(id)).map(setText(value));
+	});
+}
+
+
+function addItem(listName, value) {
+	modifyStore(listName, function(list) {
+		var newItem = {
+			id: uuid(),
+			text: value,
+			isEditing: false
+		};
+
+		list.unshift(newItem);
+	});
+}
+
+function removeItem(listName, id) {
+	modifyStore(listName, function(list) {
+		var el = list.reduce(function(prev, curr) {
+			return curr.id === id ? curr : prev;
+		}, null)
+		,  idx = list.indexOf(el);
+
+		if (idx >= 0) {
+			list.splice(idx, 1);
+		}
+	});
+}
+
+function modifyStore(listName, fn) {
+	var store = getStorage();
+	fn(store[listName]);
+	setStorage(store);
+}
+
+
+/**
+ * Storage
+ */
 function clearStorage() {
-	global.localStorage.removeItem(STORE_KEY);
-	global.localStorage.setItem(STORE_KEY, JSON.stringify({
-		good: [],
-		bad: [],
-		next: []
-	}));
+	global.localStorage.removeItem(K.STORE_KEY);
+	setStorage({ good: [], bad: [], next: [] });
 }
 
 
 function setStorage(d) {
-	global.localStorage.setItem(STORE_KEY, JSON.stringify(d));
+	global.localStorage.setItem(K.STORE_KEY, JSON.stringify(d));
 }
 
 
 function getStorage() {
-	return JSON.parse(global.localStorage.getItem(STORE_KEY));
+	return JSON.parse(global.localStorage.getItem(K.STORE_KEY));
 }
 
 
-function toggleEditing(list, id) {
-	var store = getStorage();
-
-	store[list].forEach(function(item) {
+/**
+ * helpers
+ */
+function setEditing(id) {
+	return function(item) {
 		item.isEditing = item.id === id ? !item.isEditing : false;
-
 		return item;
-	});
-
-	setStorage(store);
-	return true;
+	};
 }
 
 
-function updateItem(list, id, value) {
-	var store = getStorage()
-		, data = store[list]
-		;
-
-	for (var i = data.length - 1; i >= 0; i--) {
-
-		if (data[i].id === id) {
-			data[i].text = value;
-			data[i].isEditing = false;
-			break;
-		}
-	}
-
-	setStorage(store);
-	return true;
+function setText(value) {
+	return function(item) {
+		item.text = value;
+		item.isEditing = false;
+		return item;
+	};
 }
 
 
-function addItem(list, value) {
-	var store = getStorage()
-		;
-
-	store[list].unshift({
-		id: newUuid(),
-		text: value,
-		isEditing: false
-	});
-
-	setStorage(store);
+function eqId(id) {
+	return function(item) {
+		return item.id === id;
+	};
 }
 
-
-function newUuid() {
-	/*jshint bitwise:false */
-	var uuid = ''
-		, i = 0
-		, random
-		;
-
-	for (; i < 32; i++) {
-		random = Math.random() * 16 | 0;
-		if (i === 8 || i === 12 || i === 16 || i === 20) {
-			uuid += '-';
-		}
-		uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random))
-			.toString(16);
-	}
-
-	return uuid;
-}

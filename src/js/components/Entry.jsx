@@ -14,7 +14,11 @@ var Entry = React.createClass({
 			;
 
 		if (!isEditing) {
-			content = text;
+			content = <div>
+				{text}
+				<button type="button"
+					onClick={this.handleDelete}>delete</button>
+			</div>;
 		}
 		else {
 			content = <div>
@@ -49,6 +53,13 @@ var Entry = React.createClass({
 	},
 
 	// ACTIONS
+	handleDelete: function(evt) {
+		this.props.dispatcher.dispatch({
+			actionType: actionTypes.removeItem,
+			list: this.props.list,
+			itemId: this.props.item.id
+		});
+	},
 	handleChange: function(evt) {
 		this.setState({ text: evt.target.value });
 	},

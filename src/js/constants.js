@@ -8,6 +8,7 @@ module.exports = {
 		sampleData: 'sample-data',
 		editItem: 'edit-item',
 		updateItem: 'update-item',
-		addItem: 'add-item'
+		addItem: 'add-item',
+		removeItem: 'remove-item'
 	}
 };
