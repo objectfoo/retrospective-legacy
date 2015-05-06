@@ -122,7 +122,7 @@ function modifyStore(listName, fn) {
  * Storage
  */
 function clearStorage() {
-	global.localStorage.removeItem(K.STORE_KEY);
+	storage(null);
 	storage({ good: [], bad: [], next: [] });
 }
 
