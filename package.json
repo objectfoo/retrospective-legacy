@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "opn src/index.html",
-    "browserify": "browserify src/js/app.jsx -t [reactify] -g [uglifyify] -o dist/app.js",
-    "watch-js": "watchify src/js/app.jsx -t [reactify] -o dist/app.js -dv"
+    "browserify": "browserify src/app.jsx -t [reactify] -g [uglifyify] -o dist/app.js",
+    "watch-js": "watchify src/app.jsx -t [reactify] -o dist/app.js -dv"
   },
   "repository": {
     "type": "git",
