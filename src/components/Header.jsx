@@ -9,7 +9,7 @@ var Header = React.createClass({
 	// RENDER
 	render: function() {
 		return(
-			<header>
+			<header className="header">
 				<h1 className='pull-left'>Retrospective <small>ReactJS version</small></h1>
 				<button onClick={ this.fillSampleData } className='pull-right'>Sample</button>&nbsp;
 				<button onClick={ this.clearAll } className='pull-right'>Clear All</button>

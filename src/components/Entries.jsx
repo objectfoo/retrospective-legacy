@@ -32,7 +32,7 @@ var Entries = React.createClass({
 	},
 
 	onKeyDown: function(evt) {
-	
+
 		if (evt.which === ENTER_KEY) {
 			this.props.dispatcher.dispatch({
 				actionType: actionTypes.addItem,

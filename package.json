@@ -6,7 +6,9 @@
   "scripts": {
     "test": "opn src/index.html",
     "browserify": "browserify src/app.jsx -t [reactify] -g [uglifyify] -o dist/app.js",
-    "watch-js": "watchify src/app.jsx -t [reactify] -o dist/app.js -dv"
+    "watch-js": "watchify src/app.jsx -t [reactify] -o dist/app.js -dv",
+    "myth": "myth src/source.css dist/style.css",
+    "build": "npm run browserify && npm run myth"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,9 @@
     "envify": "^3.4.0",
     "event-emitter": "^0.3.3",
     "flux": "^2.0.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-myth": "^1.0.1",
     "opn": "^1.0.1",
     "react": "^0.13.1",
     "reactify": "^1.1.0",

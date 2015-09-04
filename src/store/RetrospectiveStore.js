@@ -31,7 +31,7 @@ module.exports = function(dispatcher) {
 
 function doAction(payload) {
 	var message = null;
-	
+
 	switch (payload.actionType) {
 		case K.actionTypes.clearAll:
 			clearStorage();
@@ -112,7 +112,7 @@ function removeItem(listName, id) {
 
 function modifyStore(listName, fn) {
 	var store = storage();
-	
+
 	fn(store[listName]);
 	storage(store);
 }
@@ -152,4 +152,3 @@ function eqId(id) {
 		return item.id === id;
 	};
 }
-
