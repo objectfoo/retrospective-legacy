@@ -4,6 +4,7 @@
 	--hilite: #8f807b;
 	--accent: #ccc;
 	--background: #f0f0f0;
+	--background-dark: #999;
 	--btnGradientStart: rgba(255,255,255,0.8);
 	--btnGradientEnd: rgba(228,222,219,0.8);
 }
@@ -70,6 +71,7 @@ body {
 }
 
 .list-retrospective li {
+	position: relative;
 	padding: 0 8px;
 }
 
@@ -102,4 +104,28 @@ body {
 	background: -webkit-gradient(linear, left top, left bottom, from var(--btnGradientStart),to var(--btnGradientEnd));
 	background: -webkit-linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
 	background: linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
+}
+
+.close {
+	cursor: pointer;
+	position: absolute;
+	top: 2px;
+	right: 0;
+	padding: 0 0 16px 13px;
+	background: none;
+	border: none;
+	-webkit-appearance: none;
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--background-dark);
+	text-shadow: 0 1px 0 #fff;
+	width: 38px;
+	height: 34px;
+	line-height: 1;
+	outline: 0;
+}
+
+.entry-content {
+	margin-right: 35px;
+	padding: 12px 10px 10px 10px;
 }

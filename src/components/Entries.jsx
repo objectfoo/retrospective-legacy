@@ -24,6 +24,7 @@ var Entries = React.createClass({
 			<div className="">
 				<input className="entry-field"
 					type="text"
+					placeholder={this.props.placeholder}
 					value={this.state.value}
 					onChange={this.handleChange}
 					onKeyDown={this.onKeyDown} />
