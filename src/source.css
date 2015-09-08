@@ -4,6 +4,8 @@
 	--hilite: #8f807b;
 	--accent: #ccc;
 	--background: #f0f0f0;
+	--btnGradientStart: rgba(255,255,255,0.8);
+	--btnGradientEnd: rgba(228,222,219,0.8);
 }
 
 * {
@@ -30,6 +32,28 @@ body {
 	margin: calc(var(--gutter) * 2) 0;
 }
 
+.u-micro-cf:before,
+.u-micro-cf:after {
+	content: " ";
+	display: table;
+}
+
+.u-micro-cf:after {
+	clear: both;
+}
+
+.m-top {
+	margin-top: var(--gutter);
+}
+
+.m-bottom {
+	margin-bottom: var(--gutter);
+}
+
+.u-pull-right {
+	float: right;
+}
+
 .u-clearboth {
 	clear: both;
 }
@@ -38,21 +62,22 @@ body {
 	list-style-type: none;
 }
 
-.retrospective-list {
+.list-retrospective {
 	background: #fff;
 	border: 1px solid var(--accent);
 	border-width: 0;
+	margin-bottom: var(--gutter);
 }
 
-.retrospective-list li {
+.list-retrospective li {
 	padding: 0 8px;
 }
 
-.retrospective-list li + li {
+.list-retrospective li + li {
 	border-top: 1px solid var(--accent);
 }
 
-.retrospective-list.has-entries {
+.list-retrospective.has-entries {
 	border-width: 0px 1px 1px 1px;
 }
 
@@ -63,4 +88,18 @@ body {
 	font-size: 18px;
 	width: 100%;
 	padding: 4px 8px;
+}
+
+.btn {
+	border-radius: 3px;
+	border: 1px solid var(--accent);
+	font-size: 14px;
+	line-height: 1.428;
+	padding: 6px 12px;
+}
+
+.btn-gradient {
+	background: -webkit-gradient(linear, left top, left bottom, from var(--btnGradientStart),to var(--btnGradientEnd));
+	background: -webkit-linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
+	background: linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
 }

@@ -9,6 +9,7 @@ module.exports = {
 		editItem: 'edit-item',
 		updateItem: 'update-item',
 		addItem: 'add-item',
-		removeItem: 'remove-item'
+		removeItem: 'remove-item',
+		sortBadList: 'sort-bad-list'
 	}
 };

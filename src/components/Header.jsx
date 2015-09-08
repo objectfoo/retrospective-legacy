@@ -9,12 +9,14 @@ var Header = React.createClass({
 	// RENDER
 	render: function() {
 		return(
-			<header className="header">
+			<header className="header u-micro-cf m-bottom">
 				<h1 className='pull-left'>Retrospective <small>ReactJS version</small></h1>
-				<button onClick={ this.fillSampleData } className='pull-right'>Sample</button>&nbsp;
-				<button onClick={ this.clearAll } className='pull-right'>Clear All</button>
-				<hr />
-				<div className='pull-right'>{ this.props.date }</div>
+				<div className="u-micro-cf">
+					<button onClick={ this.fillSampleData } className='btn btn-gradient u-pull-right'>Sample</button>
+					<button onClick={ this.clearAll } className='btn btn-gradient u-pull-right'>Clear All</button>
+				</div>
+				<hr className="m-top"/>
+				<div className='u-pull-right'>{ this.props.date }</div>
 			</header>
 		);
 	},

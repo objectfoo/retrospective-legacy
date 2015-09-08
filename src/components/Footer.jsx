@@ -1,24 +1,27 @@
 'use strict';
 
 var React = require('react');
+var K = require('../constants');
 
 var Footer = React.createClass({
 
 	// RENDER
 	render: function render() {
 		return <div className="footer">
-			<button onClick={ this.printableMode } type="button">Printable</button>&nbsp;
-			<button onClick={ this.sortBadList } type="button">Sort</button>
+			<button onClick={ this.printableMode } className="btn btn-bordered" type="button">Printable</button>&nbsp;
+			<button onClick={ this.sortBadList } className="btn btn-bordered" type="button">Sort</button>
 		</div>;
 	},
 
 	// ACTIONS
 	sortBadList: function() {
-		console.log('sort bad list');
+		this.props.dispatcher.dispatch({
+			actionType: K.actionTypes.sortBadList
+		});
 	},
 
 	printableMode: function() {
-		console.log('printable mode');
+		window.console.log('printable mode');
 	}
 });
 

@@ -20,15 +20,20 @@ var Entries = React.createClass({
 			return <Entry {...this.props} key={item.id} item={item} />;
 		}, this);
 
-		return <ul id={this.props.list}>
-			<li>
-				<input type="text"
+		return (
+			<div className="">
+				<input className="entry-field"
+					type="text"
 					value={this.state.value}
 					onChange={this.handleChange}
 					onKeyDown={this.onKeyDown} />
-			</li>
-			{entries}
-		</ul>;
+
+				<ul id={this.props.list} className="list-plain list-retrospective">
+					{entries}
+				</ul>
+
+			</div>
+		);
 	},
 
 	onKeyDown: function(evt) {
@@ -43,8 +48,8 @@ var Entries = React.createClass({
 		}
 
 		if (evt.which === ESCAPE_KEY) {
-			console.log(this.state.text);
-			console.log('reset input field of list "' + this.props.list + '"');
+			window.console.log(this.state.text);
+			window.console.log('reset input field of list "' + this.props.list + '"');
 		}
 	},
 
