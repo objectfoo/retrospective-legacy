@@ -10,8 +10,8 @@ var Footer = React.createClass({
 		return(
 			<footer className="u-micro-cf">
 				<div className="lower-controls m-bottom">
-					<button onClick={ this.printableMode } className="btn btn-bordered" type="button">Printable</button>&nbsp;
-					<button onClick={ this.sortBadList } className="btn btn-bordered" type="button">Sort</button>
+					<button onClick={ this.printable } className="btn btn-bordered btn-gradient" type="button">Printable</button>&nbsp;
+					<button onClick={ this.sortBadList } className="btn btn-bordered btn-gradient" type="button">Sort</button>
 				</div>
 				<small className="u-pull-right text-mute">a Katabelisk production, Retrospective v6.0 (reactjs)</small>
 			</footer>
@@ -21,12 +21,13 @@ var Footer = React.createClass({
 	// ACTIONS
 	sortBadList: function() {
 		this.props.dispatcher.dispatch({
-			actionType: K.actionTypes.sortBadList
+			actionType: K.actionTypes.sortBadList,
+			list: 'bad'
 		});
 	},
 
-	printableMode: function() {
-		window.console.log('printable mode');
+	printable: function() {
+		this.props.setPrintable(true);
 	}
 });
 
