@@ -77,9 +77,7 @@ function sortBadList(listName) {
 }
 
 function cmpVote(a, b) {
-	if (a.tally < b.tally) { return -1; }
-	if (a.tally > b.tally) { return 1; }
-	return 0;
+	return a.tally - b.tally;
 }
 
 function toggleEditing(listName, id) {
