@@ -1,14 +1,19 @@
 :root {
 	--border: #d5d5d5;
 	--gutter: 21px;
+	--color: #555;
 	--hilite: #8f807b;
-	--accent: #ccc;
+	--accent: #ddd;
 	--background: #f0f0f0;
-	--background-dark: #999;
+	--color-mute: #999;
 	--btnGradientStart: rgba(255,255,255,0.8);
 	--btnGradientEnd: rgba(228,222,219,0.8);
+	--hilite: #f5f6ce;
 }
 
+/**
+ * ~ base
+ ******************************************************************************/
 * {
   margin: 0;
   padding: 0;
@@ -24,15 +29,17 @@ body {
 	background: var(--background);
 }
 
-.header {
+header {
 	margin-top: 16px;
 }
 
-.footer {
-	border-top: 1px solid var(--accent);
-	margin: calc(var(--gutter) * 2) 0;
+footer {
+	margin-bottom: calc(var(--gutter) * 2);
 }
 
+/**
+ * ~ utilities
+ ******************************************************************************/
 .u-micro-cf:before,
 .u-micro-cf:after {
 	content: " ";
@@ -55,43 +62,78 @@ body {
 	float: right;
 }
 
-.u-clearboth {
-	clear: both;
+.text-mute {
+	color: var(--color-mute);
 }
 
-.list-plain {
-	list-style-type: none;
+/**
+ * ~ chrome
+ ******************************************************************************/
+.page-title {
+	color: var(--color);
+	text-shadow: 0 -1px 1px #fff;
+	border-bottom: 1px solid var(--color-mute);
+	margin: 0 0 5px 0;
 }
+
+.page-title small {
+	color: var(--color-mute);
+	font-size: 65%;
+}
+
+/**
+ * ~ phase (a retrospective section)
+ ******************************************************************************/
+.phase {
+	border: 1px solid var(--accent);
+	border-width: 1px 1px 0 1px;
+	margin-bottom: var(--gutter);
+}
+
+/**
+ * ~ list
+ ******************************************************************************/
+ .list-plain {
+ 	list-style-type: none;
+ }
 
 .list-retrospective {
 	background: #fff;
-	border: 1px solid var(--accent);
-	border-width: 0;
-	margin-bottom: var(--gutter);
+	border-top: 1px solid var(--accent);
 }
 
 .list-retrospective li {
 	position: relative;
-	padding: 0 8px;
+	border-bottom: 1px solid var(--accent);
 }
 
-.list-retrospective li + li {
-	border-top: 1px solid var(--accent);
-}
-
-.list-retrospective.has-entries {
-	border-width: 0px 1px 1px 1px;
-}
-
+/**
+ * ~ entry
+ ******************************************************************************/
 .entry-field {
-	font-family: inherit;
-	border: 1px solid var(--accent);
-	border-radius: 2px 2px 0 0;
-	font-size: 18px;
+	color: var(--color);
+	border-width: 0;
+	display: block;
+	font-size: 16px;
+	height: 40px;
+	outline: 0;
 	width: 100%;
-	padding: 4px 8px;
+	padding: 6px 12px;
 }
 
+.entry-field-fancy {
+	background-color: var(--hilite);
+}
+
+.entry-content {
+	font-size: 16px;
+	margin-right: 35px;
+	padding: 10px;
+}
+
+/**
+ * ~ button, btn
+ ******************************************************************************/
 .btn {
 	border-radius: 3px;
 	border: 1px solid var(--accent);
@@ -117,7 +159,7 @@ body {
 	-webkit-appearance: none;
 	font-size: 12px;
 	font-weight: 700;
-	color: var(--background-dark);
+	color: var(--color-mute);
 	text-shadow: 0 1px 0 #fff;
 	width: 38px;
 	height: 34px;
@@ -125,7 +167,10 @@ body {
 	outline: 0;
 }
 
-.entry-content {
-	margin-right: 35px;
-	padding: 12px 10px 10px 10px;
-}
+/**
+ * ~ footer
+ ******************************************************************************/
+ .lower-controls {
+ 	padding-bottom: var(--gutter);
+ 	border-bottom: 1px solid var(--accent);
+ }

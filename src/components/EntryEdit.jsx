@@ -11,6 +11,7 @@ var EntryForm = React.createClass({
 		return(
 			<form onSubmit={this.handleSubmit}>
 				<input
+					className="entry-field entry-field-fancy"
 					type="text"
 					ref="EntryText"
 					value={this.state.text}
@@ -18,8 +19,6 @@ var EntryForm = React.createClass({
 					onBlur={this.handleBlur}
 					onKeyDown={this.handleKeyDown}
 					/>
-					<button type="submit">Save</button>
-					<button type="button" onClick={this.handleCancel}>Cancel</button>
 			</form>
 		);
 	},
@@ -29,7 +28,9 @@ var EntryForm = React.createClass({
 	},
 
 	componentDidMount: function() {
-		this.refs.EntryText.getDOMNode().select();
+		var n = React.findDOMNode(this.refs.EntryText);
+		n.focus();
+		n.selectionStart = n.selectionEnd = n.value.length;
 	},
 
 	handleSubmit: function() {
@@ -39,10 +40,6 @@ var EntryForm = React.createClass({
 			itemId: this.props.item.id,
 			value: this.state.text.trim()
 		});
-	},
-
-	handleCancel: function() {
-		this.toggleEditing();
 	},
 
 	handleBlur: function(event) {

@@ -21,7 +21,7 @@ var Entries = React.createClass({
 		}, this);
 
 		return (
-			<div className="">
+			<section className="phase">
 				<input className="entry-field"
 					type="text"
 					placeholder={this.props.placeholder}
@@ -33,7 +33,7 @@ var Entries = React.createClass({
 					{entries}
 				</ul>
 
-			</div>
+			</section>
 		);
 	},
 
