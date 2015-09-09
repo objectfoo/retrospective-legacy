@@ -13,12 +13,9 @@ var Entries = React.createClass({
 
 	render: function() {
 		var entries
-			, data
 			, cn = 'list-plain list-retrospective';
 
-		data = this.props.store.getAll()[this.props.list] || [];
-
-		entries = data.map(function(item) {
+		entries = (this.props.store.getAll()[this.props.list] || []).map(function(item) {
 			return <Entry {...this.props} key={item.id} item={item} />;
 		}, this);
 
