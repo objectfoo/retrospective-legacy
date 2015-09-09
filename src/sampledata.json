@@ -1,17 +1,17 @@
 {
 	"good": [
-		{"id": 1, "text": "one", "isEditing": false},
-		{"id": 2, "text": "two", "isEditing": false},
-		{"id": 3, "text": "three", "isEditing": false}
+		{"id": 1, "text": "one", "isEditing": false, "tally": 0},
+		{"id": 2, "text": "two", "isEditing": false, "tally": 0},
+		{"id": 3, "text": "three", "isEditing": false, "tally": 0}
 	],
 	"bad": [
-		{"id": 10, "text": "four", "isEditing": false},
-		{"id": 20, "text": "five", "isEditing": false},
-		{"id": 30, "text": "six", "isEditing": false}
+		{"id": 10, "text": "four", "isEditing": false, "tally": 3},
+		{"id": 20, "text": "five", "isEditing": false, "tally": 2},
+		{"id": 30, "text": "six", "isEditing": false, "tally": 0}
 	],
 	"next": [
-		{"id": 100, "text": "seven", "isEditing": false},
-		{"id": 200, "text": "eight", "isEditing": false},
-		{"id": 300, "text": "nine", "isEditing": false}
+		{"id": 100, "text": "seven", "isEditing": false, "tally": 0},
+		{"id": 200, "text": "eight", "isEditing": false, "tally": 0},
+		{"id": 300, "text": "nine", "isEditing": false, "tally": 0}
 	]
 }

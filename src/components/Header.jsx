@@ -21,17 +21,6 @@ var Header = React.createClass({
 		);
 	},
 
-	// LIFECYCLE
-	getDefaultProps: function() {
-		var d = (new Date()).toJSON(), dParts;
-
-		d = d.replace(/T.*/, '');
-		dParts = d.split('-');
-		dParts = [dParts[1], dParts[2], dParts[0]];
-
-		return { date: dParts.join('/') };
-	},
-
 	// ACTIONS
 	fillSampleData: function() {
 		this.props.dispatcher.dispatch({ actionType: actionTypes.sampleData });

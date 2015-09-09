@@ -36,32 +36,31 @@ function doAction(payload) {
 		case K.actionTypes.clearAll:
 			clearStorage();
 			message = 'change:all';
-		break;
-
+			break;
 		case K.actionTypes.sampleData:
 			storage(sampleData);
 			message = 'change:all';
-		break;
-
+			break;
 		case K.actionTypes.editItem:
 			toggleEditing(payload.list, payload.itemId);
 			message = 'change:all';
-		break;
-
+			break;
 		case K.actionTypes.updateItem:
 			updateItem(payload.list, payload.itemId, payload.value);
 			message = 'change:' + payload.list;
-		break;
-
+			break;
 		case K.actionTypes.addItem:
 			addItem(payload.list, payload.value);
 			message = 'change:' + payload.list;
-		break;
-
+			break;
 		case K.actionTypes.removeItem:
 			removeItem(payload.list, payload.itemId);
 			message = 'change:' + payload.list;
-		break;
+			break;
+		case K.actionTypes.sortBadList:
+			sortBadList(payload.list);
+			message = 'change:all';
+			break;
 	}
 
 	return message;
@@ -71,6 +70,18 @@ function doAction(payload) {
 /**
  * Actions
  */
+function sortBadList(listName) {
+	modifyStore(listName, function(list) {
+		list.sort(cmpVote);
+	});
+}
+
+function cmpVote(a, b) {
+	if (a.tally < b.tally) { return -1; }
+	if (a.tally > b.tally) { return 1; }
+	return 0;
+}
+
 function toggleEditing(listName, id) {
 	modifyStore(listName, function(list) {
 		list.map(setEditing(id));
@@ -90,7 +101,8 @@ function addItem(listName, value) {
 		var newItem = {
 			id: uuid(),
 			text: value,
-			isEditing: false
+			isEditing: false,
+			tally: 0
 		};
 
 		list.unshift(newItem);

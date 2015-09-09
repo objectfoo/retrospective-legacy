@@ -3,6 +3,8 @@
 var React = require('react');
 var EntryEdit = require('./EntryEdit.jsx');
 var actionTypes = require('../constants').actionTypes;
+var RETURN_KEY = 13;
+var ESCAPE_KEY = 27;
 
 var Entry = React.createClass({
 
@@ -10,17 +12,39 @@ var Entry = React.createClass({
 		var isEditing = this.props.item.isEditing
 			, button = null
 			, content = null
+			, vote = null
 			;
+
+
+		if (!isEditing && this.props.votingEnabled) {
+			vote = (
+				<div className="u-pull-left" style={{ margin: '0 8px' }}>
+					<button className="btn-increment" type="button">+</button>
+					<input
+						className="entry-vote"
+						type="text"
+						value={this.state.tally}
+						onChange={this.handleChange}
+						onBlur={this.handleBlur}
+						onKeyDown={this.handleKeyDown}
+						/>
+				</div>
+			);
+		}
 
 		if (!isEditing) {
 			content = <div className="entry-content" onDoubleClick={this.handleDoubleClick}>{this.props.item.text}</div>;
-			button = <button className="close" type="button" onClick={this.handleDelete}>{String.fromCharCode(10006)}</button>;
+			button = <button className="btn-close" type="button" onClick={this.handleDelete}>{String.fromCharCode(10006)}</button>;
 		}
 		else {
 			content = <EntryEdit {...this.props}/>;
 		}
 
-		return <li>{content}{button}</li>;
+		return <li>{vote}{content}{button}</li>;
+	},
+
+	getInitialState: function() {
+		return { tally: this.props.item.tally };
 	},
 
 	// ACTIONS
@@ -38,7 +62,33 @@ var Entry = React.createClass({
 			list: this.props.list,
 			itemId: this.props.item.id
 		});
+	},
+
+	handleChange: function(event) {
+		this.setState({ tally: event.target.value });
+	},
+
+	handleBlur: function() {
+		window.console.log('update state');
+	},
+
+	handleKeyDown: function(event) {
+		switch (true) {
+			case event.which === RETURN_KEY:
+				window.console.log('return key: save value to store');
+				break;
+			case event.which === ESCAPE_KEY:
+				window.console.log('esc key: set value back to original value');
+				break;
+			case !isNumber(event.which):
+				event.preventDefault();
+				break;
+		}
 	}
 });
 
 module.exports = Entry;
+
+function isNumber(x) {
+	return x >= 48 && x <= 57;
+}

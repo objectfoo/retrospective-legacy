@@ -72,17 +72,3 @@ var EntryForm = React.createClass({
 });
 
 module.exports = EntryForm;
-
-/*
-content = <input
-	ref="EntryText"
-	type="text"
-	value={text}
-	onChange={this.handleChange}
-	onBlur={this.handleBlur}
-	onKeyDown={this.handleKeyDown} />;
-
-	button = <button onClick={this.handleSubmit} type="button">Save</button>;
-
-
- */

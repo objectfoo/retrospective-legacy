@@ -12,13 +12,19 @@ var Entries = React.createClass({
 	},
 
 	render: function() {
-		var entries, data;
+		var entries
+			, data
+			, cn = 'list-plain list-retrospective';
 
 		data = this.props.store.getAll()[this.props.list] || [];
 
 		entries = data.map(function(item) {
 			return <Entry {...this.props} key={item.id} item={item} />;
 		}, this);
+
+		if (this.props.votingEnabled) {
+			cn = cn + ' list-voting';
+		}
 
 		return (
 			<section className="phase">
@@ -29,7 +35,7 @@ var Entries = React.createClass({
 					onChange={this.handleChange}
 					onKeyDown={this.onKeyDown} />
 
-				<ul id={this.props.list} className="list-plain list-retrospective">
+				<ul id={this.props.list} className={cn}>
 					{entries}
 				</ul>
 

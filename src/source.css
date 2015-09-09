@@ -6,8 +6,8 @@
 	--accent: #ddd;
 	--background: #f0f0f0;
 	--color-mute: #999;
-	--btnGradientStart: rgba(255,255,255,0.8);
-	--btnGradientEnd: rgba(228,222,219,0.8);
+	--btnGradientStart: #fff;
+	--btnGradientEnd: #E4DEDB;
 	--hilite: #f5f6ce;
 }
 
@@ -62,6 +62,10 @@ footer {
 	float: right;
 }
 
+.u-pull-left {
+	float: left;
+}
+
 .text-mute {
 	color: var(--color-mute);
 }
@@ -107,6 +111,24 @@ footer {
 	border-bottom: 1px solid var(--accent);
 }
 
+.list-voting {
+	position: relative;
+	counter-reset: alphas;
+}
+
+.list-voting li {
+	padding-left: 40px;
+}
+
+.list-voting li:before {
+	content: counter(alphas, upper-alpha);
+	counter-increment: alphas;
+	position: absolute;
+	left: 17px;
+	top: 6px;
+	font-size: 21px;
+	color: #8f807b;
+}
 /**
  * ~ entry
  ******************************************************************************/
@@ -129,6 +151,22 @@ footer {
 	font-size: 16px;
 	margin-right: 35px;
 	padding: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.entry-vote {
+	border: 1px solid var(--accent);
+	border-radius: 3px;
+	width: 36px;
+	height: 36px;
+	margin-top: 3px;
+	text-align: center;
+	font-family: inherit;
+	font-size: 21px;
+	color: var(--color)
 }
 
 /**
@@ -148,23 +186,62 @@ footer {
 	background: linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
 }
 
-.close {
-	cursor: pointer;
-	position: absolute;
-	top: 2px;
-	right: 0;
-	padding: 0 0 16px 13px;
+.btn-gradient:hover {
+	background: #eee;
+	border-color: #b6b6b6;
+}
+
+.btn-close {
+	-webkit-appearance: none;
 	background: none;
 	border: none;
-	-webkit-appearance: none;
+	color: var(--color-mute);
+	cursor: pointer;
 	font-size: 12px;
 	font-weight: 700;
-	color: var(--color-mute);
-	text-shadow: 0 1px 0 #fff;
-	width: 38px;
 	height: 34px;
 	line-height: 1;
 	outline: 0;
+	padding: 0 0 16px 13px;
+	position: absolute;
+	right: 0;
+	text-shadow: 0 1px 0 #fff;
+	top: 2px;
+	width: 38px;
+}
+
+.btn-increment {
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	color: #444;
+	display: none;
+	font-family: monospace;
+	font-size: 24px;
+	font-weight: bold;
+	height: 36px;
+	left: 6px;
+	line-height: 1;
+	outline: 0;
+	padding: 0 0 3px 0;
+	position: absolute;
+	top: 3px;
+	width: 36px;
+	background: -webkit-gradient(linear, left top, left bottom, from var(--btnGradientStart),to var(--btnGradientEnd));
+	background: -webkit-linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
+	background: linear-gradient(top, var(--btnGradientStart), var(--btnGradientEnd));
+}
+
+.btn-increment:hover {
+	box-shadow: 0px 1px 6px -3px #111;
+}
+
+.btn-increment:active {
+	background: #eee;
+	box-shadow: none;
+}
+
+li:hover .btn-increment {
+	display: block;
 }
 
 /**
