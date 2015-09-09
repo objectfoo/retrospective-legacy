@@ -15,11 +15,10 @@ var Entry = React.createClass({
 			, vote = null
 			;
 
-
 		if (!isEditing && this.props.votingEnabled) {
 			vote = (
 				<div className="u-pull-left" style={{ margin: '0 8px' }}>
-					<button className="btn-increment" type="button">+</button>
+					<button onClick={this.handleIncrement} className="btn-increment" type="button">+</button>
 					<input
 						className="entry-vote"
 						type="text"
@@ -43,11 +42,20 @@ var Entry = React.createClass({
 		return <li>{vote}{content}{button}</li>;
 	},
 
+	// LIFECYCLE
 	getInitialState: function() {
 		return { tally: this.props.item.tally };
 	},
 
 	// ACTIONS
+	handleIncrement: function() {
+		this.props.dispatcher.dispatch({
+			actionType: actionTypes.incrementTally,
+			list: this.props.list,
+			itemId: this.props.item.id
+		});
+	},
+
 	handleDelete: function() {
 		this.props.dispatcher.dispatch({
 			actionType: actionTypes.removeItem,

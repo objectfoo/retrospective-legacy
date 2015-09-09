@@ -61,6 +61,10 @@ function doAction(payload) {
 			sortBadList(payload.list);
 			message = 'change:all';
 			break;
+		case K.actionTypes.incrementTally:
+			incrementTally(payload.list, payload.itemId);
+			message = 'change:all';
+			break;
 	}
 
 	return message;
@@ -70,6 +74,19 @@ function doAction(payload) {
 /**
  * Actions
  */
+function incrementTally(listName, id) {
+	modifyStore(listName, function(list) {
+		var item = list.reduce(function(acc, item) {
+			if (acc) { return acc; }
+			else if (id === item.id) { acc = item; }
+
+			return acc;
+		}, null);
+
+		if (item) { item.tally += 1; }
+	});
+}
+
 function sortBadList(listName) {
 	modifyStore(listName, function(list) {
 		list.sort(cmpVote);
