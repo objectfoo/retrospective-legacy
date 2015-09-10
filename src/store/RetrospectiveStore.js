@@ -43,7 +43,7 @@ function doAction(payload) {
 			break;
 		case K.actionTypes.editItem:
 			toggleEditing(payload.list, payload.itemId);
-			message = 'change:all';
+			message = 'change:' + payload.list;
 			break;
 		case K.actionTypes.updateItem:
 			updateItem(payload.list, payload.itemId, payload.value);
@@ -59,15 +59,15 @@ function doAction(payload) {
 			break;
 		case K.actionTypes.sortBadList:
 			sortBadList(payload.list);
-			message = 'change:all';
+			message = 'change:' + payload.list;
 			break;
 		case K.actionTypes.incrementTally:
 			incrementTally(payload.list, payload.itemId);
-			message = 'change:all';
+			message = 'change:' + payload.list;
 			break;
 		case K.actionTypes.setTally:
-			setTally(payload.list, payload.itemId);
-			message = 'change:all';
+			setTally(payload.list, payload.itemId, payload.value);
+			message = 'change:' + payload.list;
 			break;
 	}
 

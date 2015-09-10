@@ -3,8 +3,6 @@
 var React = require('react');
 var EntryEdit = require('./EntryEdit.jsx');
 var actionTypes = require('../constants').actionTypes;
-var RETURN_KEY = 13;
-var ESCAPE_KEY = 27;
 
 var Entry = React.createClass({
 
@@ -24,7 +22,6 @@ var Entry = React.createClass({
 						type="text"
 						value={this.props.item.tally}
 						onChange={this.handleChange}
-						onBlur={this.handleBlur}
 						onKeyDown={this.handleKeyDown}
 						/>
 				</div>
@@ -68,27 +65,19 @@ var Entry = React.createClass({
 	},
 
 	handleChange: function(event) {
-		this.props.dispatcher.dispatch({
-			actionType: actionTypes.
-		});
-		this.setState({ tally: event.target.value });
-	},
+		var value = parseInt(event.target.value, 10);
 
-	handleBlur: function() {
-		window.console.log('update state');
+		this.props.dispatcher.dispatch({
+			actionType: actionTypes.setTally,
+			list: this.props.list,
+			itemId: this.props.item.id,
+			value: value
+		});
 	},
 
 	handleKeyDown: function(event) {
-		switch (true) {
-			case event.which === RETURN_KEY:
-				window.console.log('return key: save value to store');
-				break;
-			case event.which === ESCAPE_KEY:
-				window.console.log('esc key: set value back to original value');
-				break;
-			case !isDigitCharCode(event.which):
-				event.preventDefault();
-				break;
+		if (!isDigitCharCode(event.which)) {
+			event.prevendDefault();
 		}
 	}
 });

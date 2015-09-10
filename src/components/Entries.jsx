@@ -29,7 +29,6 @@ var Entries = React.createClass({
 					type="text"
 					placeholder={this.props.placeholder}
 					value={this.state.value}
-					onChange={this.handleChange}
 					onKeyDown={this.onKeyDown} />
 
 				<ul id={this.props.list} className={cn}>
@@ -40,27 +39,19 @@ var Entries = React.createClass({
 		);
 	},
 
-	onKeyDown: function(evt) {
-
-		if (evt.which === ENTER_KEY) {
+	onKeyDown: function(event) {
+		if (event.which === ENTER_KEY && event.target.value.length > 0) {
 			this.props.dispatcher.dispatch({
 				actionType: actionTypes.addItem,
 				list: this.props.list,
-				value: this.state.text
+				value: event.target.value.trim()
 			});
-			evt.target.value = '';
+			event.target.value = '';
 		}
 
-		if (evt.which === ESCAPE_KEY) {
-			window.console.log(this.state.text);
-			window.console.log('reset input field of list "' + this.props.list + '"');
+		if (event.which === ESCAPE_KEY) {
+			event.target.value = this.state.text;
 		}
-	},
-
-	handleChange: function(evt) {
-		this.setState({
-			text: evt.target.value
-		});
 	},
 
 	handleUpdate: function() {
