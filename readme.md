@@ -10,14 +10,21 @@ build
 $npm run build
 ```
 
-dev
+dev on pc, takes 2 terminals
+
 ```
 # for myth
-$ grunt watch
+$ npm run watch-myth
 
 # for jsx
-$ npm run watch-js
+$ npm run watchify
 ```
+
+dev on Mac
+```
+$ npm run watch
+```
+
 
 
 ## References
