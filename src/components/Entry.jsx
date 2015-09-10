@@ -24,7 +24,7 @@ var Entry = React.createClass({
 						type="text"
 						value={this.props.item.tally}
 						onChange={this.handleChange}
-						onKeyDown={this.handleKeyDown}
+						onKeyPress={this.handleKeyPress}
 						/>
 				</div>
 			);
@@ -77,9 +77,9 @@ var Entry = React.createClass({
 		});
 	},
 
-	handleKeyDown: function(event) {
+	handleKeyPress: function(event) {
 		if (!isDigitCharCode(event.which)) {
-			event.prevendDefault();
+			event.preventDefault();
 		}
 	}
 });
