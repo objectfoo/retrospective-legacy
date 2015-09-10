@@ -4,8 +4,6 @@ var React = require('react');
 var K = require('../constants');
 
 var Footer = React.createClass({
-
-	// RENDER
 	render: function render() {
 		return(
 			<footer className="u-micro-cf">

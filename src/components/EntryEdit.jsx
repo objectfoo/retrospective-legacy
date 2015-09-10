@@ -6,6 +6,15 @@ var RETURN_KEY = 13;
 var ESCAPE_KEY = 27;
 
 var EntryForm = React.createClass({
+	getInitialState: function() {
+		return { text: this.props.item.text };
+	},
+
+	componentDidMount: function() {
+		var n = React.findDOMNode(this.refs.EntryText);
+		n.focus();
+		n.selectionStart = n.selectionEnd = n.value.length;
+	},
 
 	render: function() {
 		return(
@@ -21,16 +30,6 @@ var EntryForm = React.createClass({
 					/>
 			</form>
 		);
-	},
-
-	getInitialState: function() {
-		return { text: this.props.item.text };
-	},
-
-	componentDidMount: function() {
-		var n = React.findDOMNode(this.refs.EntryText);
-		n.focus();
-		n.selectionStart = n.selectionEnd = n.value.length;
 	},
 
 	handleSubmit: function() {

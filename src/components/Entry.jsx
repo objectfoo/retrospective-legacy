@@ -5,7 +5,6 @@ var EntryEdit = require('./EntryEdit.jsx');
 var actionTypes = require('../constants').actionTypes;
 
 var Entry = React.createClass({
-
 	render: function() {
 		var isEditing = this.props.item.isEditing
 			, button = null

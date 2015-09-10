@@ -1,16 +1,30 @@
 'use strict';
 
-var React = require('react')
-, Dispatcher = require('flux').Dispatcher
-, dispatcher = new Dispatcher()
-, store = require('../store/RetrospectiveStore')(dispatcher)
+var React = require('react');
+var Dispatcher = require('flux').Dispatcher;
+var dispatcher = new Dispatcher();
+var store = require('../store/RetrospectiveStore')(dispatcher);
 
-, Header = require('./Header.jsx')
-, Entries = require('./Entries.jsx')
-, Footer = require('./Footer.jsx')
-, Printable = require('./Printable.jsx')
+var Header = require('./Header.jsx');
+var Entries = require('./Entries.jsx');
+var Footer = require('./Footer.jsx');
+var Printable = require('./Printable.jsx');
 
-, Retrospective = React.createClass({
+var Retrospective = React.createClass({
+	getInitialState: function () {
+		return { printable: false };
+	},
+
+	getDefaultProps: function () {
+		var d = (new Date()).toJSON(), dParts;
+
+		d = d.replace(/T.*/, '');
+		dParts = d.split('-');
+		dParts = [dParts[1], dParts[2], dParts[0]];
+
+		return { date: dParts.join('/') };
+	},
+
 	render: function() {
 		var props = { store: store, dispatcher: dispatcher };
 
@@ -27,20 +41,6 @@ var React = require('react')
 				</div>
 			);
 		}
-	},
-
-	getInitialState: function () {
-		return { printable: false };
-	},
-
-	getDefaultProps: function () {
-		var d = (new Date()).toJSON(), dParts;
-
-		d = d.replace(/T.*/, '');
-		dParts = d.split('-');
-		dParts = [dParts[1], dParts[2], dParts[0]];
-
-		return { date: dParts.join('/') };
 	},
 
 	setPrintable: function(val) {

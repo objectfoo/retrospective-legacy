@@ -11,6 +11,16 @@ var Entries = React.createClass({
 		return { text: '' };
 	},
 
+	componentDidMount: function() {
+		this.props.store.on('change:all', this.handleUpdate);
+		this.props.store.on('change:' + this.props.list, this.handleUpdate);
+	},
+
+	componentWillUnmount: function() {
+		this.props.store.off('change:all', this.handleUpdate);
+		this.props.store.off('change:' + this.props.list, this.handleUpdate);
+	},
+
 	render: function() {
 		var entries
 			, cn = 'list-plain list-retrospective';
@@ -29,7 +39,7 @@ var Entries = React.createClass({
 					type="text"
 					placeholder={this.props.placeholder}
 					value={this.state.value}
-					onKeyDown={this.onKeyDown} />
+					onKeyDown={this.handleKeyDown} />
 
 				<ul id={this.props.list} className={cn}>
 					{entries}
@@ -39,7 +49,7 @@ var Entries = React.createClass({
 		);
 	},
 
-	onKeyDown: function(event) {
+	handleKeyDown: function(event) {
 		if (event.which === ENTER_KEY && event.target.value.length > 0) {
 			this.props.dispatcher.dispatch({
 				actionType: actionTypes.addItem,
@@ -56,19 +66,7 @@ var Entries = React.createClass({
 
 	handleUpdate: function() {
 		this.forceUpdate();
-	},
-
-	// LIFECYCLE
-	componentDidMount: function() {
-		this.props.store.on('change:all', this.handleUpdate);
-		this.props.store.on('change:' + this.props.list, this.handleUpdate);
-	},
-
-	componentWillUnmount: function() {
-		this.props.store.off('change:all', this.handleUpdate);
-		this.props.store.off('change:' + this.props.list, this.handleUpdate);
 	}
-
 });
 
 module.exports = Entries;
