@@ -1,20 +1,22 @@
 'use strict';
 
-var K = require('../constants');
+var K = require('./constants');
 var eventEmitter = require('event-emitter');
-var uuid = require('./utils').uuid;
-var sampleData = require('../sampleData.json');
-var storage = require('./utils').storage;
-var dispatcher = require('../dispatcher');
+var uuid = require('./lib/uuid');
+var sampleData = require('./sampleData.json');
+var localStore = require('./lib/localStore');
+var dispatcher = require('./dispatcher');
+
+var first = require('./lib/first');
 
 module.exports = RetrospectiveStore();
 
 function RetrospectiveStore() {
 	var ee = eventEmitter({
-		getAll: storage
+		getAll: localStore
 	});
 
-	if (storage() === null) {
+	if (localStore() === null) {
 		clearStorage();
 	}
 
@@ -31,7 +33,6 @@ function RetrospectiveStore() {
 	return ee;
 }
 
-
 function doAction(payload) {
 	var message = null;
 
@@ -41,7 +42,7 @@ function doAction(payload) {
 			message = 'change:all';
 			break;
 		case K.actionTypes.sampleData:
-			storage(sampleData);
+			localStore(sampleData);
 			message = 'change:all';
 			break;
 		case K.actionTypes.editItem:
@@ -77,13 +78,12 @@ function doAction(payload) {
 	return message;
 }
 
-
 /**
  * Actions
  */
 function setTally(listName, id, value) {
 	modifyStore(listName, function(list) {
-		var item = entryById(list, id);
+		var item = first(list.filter(eqId(id)));
 
 		if (item) {
 			item.tally = value;
@@ -93,7 +93,7 @@ function setTally(listName, id, value) {
 
 function incrementTally(listName, id) {
 	modifyStore(listName, function(list) {
-		var item = entryById(list, id);
+		var item = first(list.filter(eqId(id)));
 
 		if (item) {
 			item.tally += 1;
@@ -117,10 +117,9 @@ function toggleEditing(listName, id) {
 	});
 }
 
-
 function updateItem(listName, id, value) {
 	modifyStore(listName, function(list) {
-		var item = entryById(list, id);
+		var item = first(list.filter(eqId(id)));
 
 		if (item) {
 			item.text = value;
@@ -128,7 +127,6 @@ function updateItem(listName, id, value) {
 		}
 	});
 }
-
 
 function addItem(listName, value) {
 	modifyStore(listName, function(list) {
@@ -145,7 +143,7 @@ function addItem(listName, value) {
 
 function removeItem(listName, id) {
 	modifyStore(listName, function(list) {
-		var item = entryById(list, id);
+		var item = first(list.filter(eqId(id)));
 		var idx = list.indexOf(item);
 
 		if (idx >= 0) {
@@ -155,29 +153,23 @@ function removeItem(listName, id) {
 }
 
 function modifyStore(listName, fn) {
-	var store = storage();
+	var store = localStore();
 
 	fn(store[listName]);
-	storage(store);
+	localStore(store);
 }
-
 
 /**
  * Storage
  */
 function clearStorage() {
-	storage(null);
-	storage({ good: [], bad: [], next: [] });
+	localStore(null);
+	localStore({ good: [], bad: [], next: [] });
 }
-
 
 /**
- * helpers
+ * Helpers
  */
-function entryById(list, id) {
-	return first(list.filter(eqId(id)));
-}
-
 function setEditing(id) {
 	return function(item) {
 		item.isEditing = item.id === id ? !item.isEditing : false;
@@ -189,12 +181,4 @@ function eqId(id) {
 	return function(item) {
 		return item.id === id;
 	};
-}
-
-function first(a) {
-	if (Array.isArray(a)) {
-		return a[0];
-	}
-
-	return null;
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var store = require('../store/RetrospectiveStore');
+var store = require('../RetrospectiveStore');
 
 var Header = require('./Header.jsx');
 var Entries = require('./Entries.jsx');
@@ -24,7 +24,6 @@ var Retrospective = React.createClass({
 	},
 
 	render: function() {
-		console.log(store);
 		if (this.state.printable === true) {
 			return <Printable store={store} date={this.props.date}/>;
 		} else {

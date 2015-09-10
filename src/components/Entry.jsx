@@ -5,6 +5,8 @@ var EntryEdit = require('./EntryEdit.jsx');
 var actionTypes = require('../constants').actionTypes;
 var dispatcher = require('../dispatcher');
 
+var isDigitCharCode = require('../lib/isDigitCharCode');
+
 var Entry = React.createClass({
 	render: function() {
 		var isEditing = this.props.item.isEditing
@@ -83,7 +85,3 @@ var Entry = React.createClass({
 });
 
 module.exports = Entry;
-
-function isDigitCharCode(x) {
-	return x >= 48 && x <= 57;
-}
