@@ -65,6 +65,10 @@ function doAction(payload) {
 			incrementTally(payload.list, payload.itemId);
 			message = 'change:all';
 			break;
+		case K.actionTypes.setTally:
+			setTally(payload.list, payload.itemId);
+			message = 'change:all';
+			break;
 	}
 
 	return message;
@@ -74,16 +78,23 @@ function doAction(payload) {
 /**
  * Actions
  */
+function setTally(listName, id, value) {
+	modifyStore(listName, function(list) {
+		var item = entryById(list, id);
+
+		if (item) {
+			item.tally = value;
+		}
+	});
+}
+
 function incrementTally(listName, id) {
 	modifyStore(listName, function(list) {
-		var item = list.reduce(function(acc, item) {
-			if (acc) { return acc; }
-			else if (id === item.id) { acc = item; }
+		var item = entryById(list, id);
 
-			return acc;
-		}, null);
-
-		if (item) { item.tally += 1; }
+		if (item) {
+			item.tally += 1;
+		}
 	});
 }
 
@@ -106,7 +117,12 @@ function toggleEditing(listName, id) {
 
 function updateItem(listName, id, value) {
 	modifyStore(listName, function(list) {
-		list.filter(eqId(id)).map(setText(value));
+		var item = entryById(list, id);
+
+		if (item) {
+			item.text = value;
+			item.isEditing = false;
+		}
 	});
 }
 
@@ -126,10 +142,8 @@ function addItem(listName, value) {
 
 function removeItem(listName, id) {
 	modifyStore(listName, function(list) {
-		var el = list.reduce(function(prev, curr) {
-			return curr.id === id ? curr : prev;
-		}, null)
-		,  idx = list.indexOf(el);
+		var item = entryById(list, id);
+		var idx = list.indexOf(item);
 
 		if (idx >= 0) {
 			list.splice(idx, 1);
@@ -157,6 +171,10 @@ function clearStorage() {
 /**
  * helpers
  */
+function entryById(list, id) {
+	return first(list.filter(eqId(id)));
+}
+
 function setEditing(id) {
 	return function(item) {
 		item.isEditing = item.id === id ? !item.isEditing : false;
@@ -164,18 +182,16 @@ function setEditing(id) {
 	};
 }
 
-
-function setText(value) {
-	return function(item) {
-		item.text = value;
-		item.isEditing = false;
-		return item;
-	};
-}
-
-
 function eqId(id) {
 	return function(item) {
 		return item.id === id;
 	};
+}
+
+function first(a) {
+	if (Array.isArray(a)) {
+		return a[0];
+	}
+
+	return null;
 }

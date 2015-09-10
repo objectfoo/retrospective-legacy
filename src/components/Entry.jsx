@@ -22,7 +22,7 @@ var Entry = React.createClass({
 					<input
 						className="entry-vote"
 						type="text"
-						value={this.state.tally}
+						value={this.props.item.tally}
 						onChange={this.handleChange}
 						onBlur={this.handleBlur}
 						onKeyDown={this.handleKeyDown}
@@ -40,11 +40,6 @@ var Entry = React.createClass({
 		}
 
 		return <li>{vote}{content}{button}</li>;
-	},
-
-	// LIFECYCLE
-	getInitialState: function() {
-		return { tally: this.props.item.tally };
 	},
 
 	// ACTIONS

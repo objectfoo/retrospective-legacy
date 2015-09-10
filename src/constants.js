@@ -11,6 +11,7 @@ module.exports = {
 		addItem: 'add-item',
 		removeItem: 'remove-item',
 		incrementTally: 'increment-tally',
-		sortBadList: 'sort-bad-list'
+		sortBadList: 'sort-bad-list',
+		setTally: 'set-tally'
 	}
 };
