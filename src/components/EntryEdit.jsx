@@ -44,7 +44,7 @@ var EntryForm = React.createClass({
 
 	handleBlur: function(event) {
 		this.setState({ text: event.target.value.trim() });
-		this.toggleEditing();
+		this.props.toggleEditing();
 	},
 
 	handleChange: function(event) {
@@ -56,17 +56,8 @@ var EntryForm = React.createClass({
 			this.setState({ text: this.refs.EntryText.getDOMNode().value.trim() });
 			this.handleSubmit();
 		} else if (event.which === ESCAPE_KEY) {
-			this.toggleEditing();
+			this.props.toggleEditing();
 		}
-
-	},
-
-	toggleEditing: function() {
-		this.props.dispatcher.dispatch({
-			actionType: actionTypes.editItem,
-			list: this.props.list,
-			itemId: this.props.item.id
-		});
 	}
 });
 

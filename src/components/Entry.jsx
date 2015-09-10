@@ -29,11 +29,11 @@ var Entry = React.createClass({
 		}
 
 		if (!isEditing) {
-			content = <div className="entry-content" onDoubleClick={this.handleDoubleClick}>{this.props.item.text}</div>;
+			content = <div className="entry-content" onDoubleClick={this.toggleEditing}>{this.props.item.text}</div>;
 			button = <button tabIndex="-1" className="btn-close" type="button" onClick={this.handleDelete}>{String.fromCharCode(10006)}</button>;
 		}
 		else {
-			content = <EntryEdit {...this.props}/>;
+			content = <EntryEdit {...this.props} toggleEditing={this.toggleEditing}/>;
 		}
 
 		return <li>{vote}{content}{button}</li>;
@@ -56,7 +56,7 @@ var Entry = React.createClass({
 		});
 	},
 
-	handleDoubleClick: function() {
+	toggleEditing: function() {
 		this.props.dispatcher.dispatch({
 			actionType: actionTypes.editItem,
 			list: this.props.list,
