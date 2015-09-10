@@ -66,7 +66,6 @@ var EntryForm = React.createClass({
 			actionType: actionTypes.editItem,
 			list: this.props.list,
 			itemId: this.props.item.id
-
 		});
 	}
 });

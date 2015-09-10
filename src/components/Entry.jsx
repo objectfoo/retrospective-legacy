@@ -30,7 +30,7 @@ var Entry = React.createClass({
 
 		if (!isEditing) {
 			content = <div className="entry-content" onDoubleClick={this.handleDoubleClick}>{this.props.item.text}</div>;
-			button = <button className="btn-close" type="button" onClick={this.handleDelete}>{String.fromCharCode(10006)}</button>;
+			button = <button tabIndex="-1" className="btn-close" type="button" onClick={this.handleDelete}>{String.fromCharCode(10006)}</button>;
 		}
 		else {
 			content = <EntryEdit {...this.props}/>;
