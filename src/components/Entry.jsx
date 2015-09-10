@@ -68,6 +68,9 @@ var Entry = React.createClass({
 	},
 
 	handleChange: function(event) {
+		this.props.dispatcher.dispatch({
+			actionType: actionTypes.
+		});
 		this.setState({ tally: event.target.value });
 	},
 
@@ -83,7 +86,7 @@ var Entry = React.createClass({
 			case event.which === ESCAPE_KEY:
 				window.console.log('esc key: set value back to original value');
 				break;
-			case !isNumber(event.which):
+			case !isDigitCharCode(event.which):
 				event.preventDefault();
 				break;
 		}
@@ -92,6 +95,6 @@ var Entry = React.createClass({
 
 module.exports = Entry;
 
-function isNumber(x) {
+function isDigitCharCode(x) {
 	return x >= 48 && x <= 57;
 }
