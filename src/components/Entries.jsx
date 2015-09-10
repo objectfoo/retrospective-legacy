@@ -3,6 +3,7 @@
 var React = require('react');
 var Entry = require('./Entry.jsx');
 var actionTypes = require('../constants').actionTypes;
+var dispatcher = require('../dispatcher');
 var ENTER_KEY = 13;
 var ESCAPE_KEY = 27;
 
@@ -22,9 +23,8 @@ var Entries = React.createClass({
 	},
 
 	render: function() {
-		var entries
-			, cn = 'list-plain list-retrospective';
-
+		var entries, cn = 'list-plain list-retrospective';
+		console.log(this.props);
 		entries = (this.props.store.getAll()[this.props.list] || []).map(function(item) {
 			return <Entry {...this.props} key={item.id} item={item} />;
 		}, this);
@@ -51,15 +51,14 @@ var Entries = React.createClass({
 
 	handleKeyDown: function(event) {
 		if (event.which === ENTER_KEY && event.target.value.length > 0) {
-			this.props.dispatcher.dispatch({
+			dispatcher.dispatch({
 				actionType: actionTypes.addItem,
 				list: this.props.list,
 				value: event.target.value.trim()
 			});
 			event.target.value = '';
 		}
-
-		if (event.which === ESCAPE_KEY) {
+		else if (event.which === ESCAPE_KEY) {
 			event.target.value = this.state.text;
 		}
 	},

@@ -2,6 +2,7 @@
 
 var React = require('react');
 var K = require('../constants');
+var dispatcher = require('../dispatcher');
 
 var Footer = React.createClass({
 	render: function render() {
@@ -18,7 +19,7 @@ var Footer = React.createClass({
 
 	// ACTIONS
 	sortBadList: function() {
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: K.actionTypes.sortBadList,
 			list: 'bad'
 		});

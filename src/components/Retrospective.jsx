@@ -1,9 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Dispatcher = require('flux').Dispatcher;
-var dispatcher = new Dispatcher();
-var store = require('../store/RetrospectiveStore')(dispatcher);
+var store = require('../store/RetrospectiveStore');
 
 var Header = require('./Header.jsx');
 var Entries = require('./Entries.jsx');
@@ -26,18 +24,17 @@ var Retrospective = React.createClass({
 	},
 
 	render: function() {
-		var props = { store: store, dispatcher: dispatcher };
-
+		console.log(store);
 		if (this.state.printable === true) {
 			return <Printable store={store} date={this.props.date}/>;
 		} else {
 			return (
 				<div className='retrospective'>
-					<Header dispatcher={dispatcher} date={this.props.date} />
-					<Entries list='good' placeholder="What went well?" {...props} />
-					<Entries list='bad' votingEnabled="true" placeholder="What needs improvement?" {...props} />
-					<Entries list='next' placeholder="What should we try next time?" {...props} />
-					<Footer {...props} setPrintable={this.setPrintable} />
+					<Header date={this.props.date} />
+					<Entries list='good' placeholder="What went well?" store={store} />
+					<Entries list='bad' votingEnabled="true" placeholder="What needs improvement?" store={store} />
+					<Entries list='next' placeholder="What should we try next time?" store={store} />
+					<Footer store={store} setPrintable={this.setPrintable} />
 				</div>
 			);
 		}

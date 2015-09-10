@@ -3,10 +3,9 @@
 
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
+var dispatcher = require('../dispatcher');
 
 var Header = React.createClass({
-
-	// RENDER
 	render: function() {
 		return(
 			<header className="u-micro-cf m-bottom">
@@ -23,11 +22,11 @@ var Header = React.createClass({
 
 	// ACTIONS
 	fillSampleData: function() {
-		this.props.dispatcher.dispatch({ actionType: actionTypes.sampleData });
+		dispatcher.dispatch({ actionType: actionTypes.sampleData });
 	},
 
 	clearAll: function() {
-		this.props.dispatcher.dispatch({ actionType: actionTypes.clearAll });
+		dispatcher.dispatch({ actionType: actionTypes.clearAll });
 	}
 
 });

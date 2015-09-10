@@ -2,6 +2,8 @@
 
 var React = require('react');
 var actionTypes = require('../constants').actionTypes;
+var dispatcher = require('../dispatcher');
+
 var RETURN_KEY = 13;
 var ESCAPE_KEY = 27;
 
@@ -33,7 +35,7 @@ var EntryForm = React.createClass({
 	},
 
 	handleSubmit: function() {
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: actionTypes.updateItem,
 			list: this.props.list,
 			itemId: this.props.item.id,

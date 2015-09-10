@@ -3,6 +3,7 @@
 var React = require('react');
 var EntryEdit = require('./EntryEdit.jsx');
 var actionTypes = require('../constants').actionTypes;
+var dispatcher = require('../dispatcher');
 
 var Entry = React.createClass({
 	render: function() {
@@ -40,7 +41,7 @@ var Entry = React.createClass({
 
 	// ACTIONS
 	handleIncrement: function() {
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: actionTypes.incrementTally,
 			list: this.props.list,
 			itemId: this.props.item.id
@@ -48,7 +49,7 @@ var Entry = React.createClass({
 	},
 
 	handleDelete: function() {
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: actionTypes.removeItem,
 			list: this.props.list,
 			itemId: this.props.item.id
@@ -56,7 +57,7 @@ var Entry = React.createClass({
 	},
 
 	toggleEditing: function() {
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: actionTypes.editItem,
 			list: this.props.list,
 			itemId: this.props.item.id
@@ -66,7 +67,7 @@ var Entry = React.createClass({
 	handleChange: function(event) {
 		var value = parseInt(event.target.value, 10);
 
-		this.props.dispatcher.dispatch({
+		dispatcher.dispatch({
 			actionType: actionTypes.setTally,
 			list: this.props.list,
 			itemId: this.props.item.id,

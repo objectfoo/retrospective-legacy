@@ -5,8 +5,11 @@ var eventEmitter = require('event-emitter');
 var uuid = require('./utils').uuid;
 var sampleData = require('../sampleData.json');
 var storage = require('./utils').storage;
+var dispatcher = require('../dispatcher');
 
-module.exports = function(dispatcher) {
+module.exports = RetrospectiveStore();
+
+function RetrospectiveStore() {
 	var ee = eventEmitter({
 		getAll: storage
 	});
@@ -26,7 +29,7 @@ module.exports = function(dispatcher) {
 	});
 
 	return ee;
-};
+}
 
 
 function doAction(payload) {
