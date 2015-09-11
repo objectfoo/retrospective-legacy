@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var store = require('../RetrospectiveStore');
+var store = require('../retrospectiveStore');
 
 var Header = require('./Header.jsx');
 var Entries = require('./Entries.jsx');
