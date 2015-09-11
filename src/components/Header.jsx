@@ -10,8 +10,7 @@ var Header = React.createClass({
 		return(
 			<header className="u-micro-cf m-bottom">
 				<div className="u-pull-right">
-					<button onClick={ this.fillSampleData } className='btn btn-gradient'>Sample</button>
-					&nbsp;
+					<button onClick={ this.fillSampleData } className='btn btn-gradient'>Sample</button> 
 					<button onClick={ this.clearAll } className='btn btn-gradient'>Clear All</button>
 				</div>
 				<h1 className="pull-left page-title">Retrospective <small>ReactJS</small></h1>

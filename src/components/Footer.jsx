@@ -9,7 +9,7 @@ var Footer = React.createClass({
 		return(
 			<footer className="u-micro-cf">
 				<div className="lower-controls m-bottom">
-					<button onClick={ this.printable } className="btn btn-bordered btn-gradient" type="button">Printable</button>&nbsp;
+					<button onClick={ this.printable } className="btn btn-bordered btn-gradient" type="button">Printable</button> 
 					<button onClick={ this.sortBadList } className="btn btn-bordered btn-gradient" type="button">Sort</button>
 				</div>
 				<small className="u-pull-right text-mute">a Katabelisk production, Retrospective v6.0 (reactjs)</small>
