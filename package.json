@@ -6,8 +6,8 @@
   "scripts": {
     "test": "opn dist/index.html",
 
-    "browserify": "browserify src/app.jsx -t [reactify] -g [uglifyify] -o dist/app.js",
-    "watchify": "npm run copy && watchify src/app.jsx -t [reactify] -o dist/app.js -dv",
+    "browserify": "browserify src/app.jsx -t reactify -g uglifyify -o dist/app.js",
+    "watchify": "npm run copy && watchify src/app.jsx -t reactify -o dist/app.js -dv",
 
     "myth": "myth src/source.css dist/style.css",
     "watch-myth": "npm run copy && myth --watch --verbose src/source.css dist/style.css",
