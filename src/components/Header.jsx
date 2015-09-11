@@ -2,32 +2,21 @@
 
 
 var React = require('react');
-var actionTypes = require('../constants').actionTypes;
-var dispatcher = require('../dispatcher');
+var actions = require('../actions');
 
 var Header = React.createClass({
 	render: function() {
 		return(
 			<header className="u-micro-cf m-bottom">
 				<div className="u-pull-right">
-					<button onClick={ this.fillSampleData } className='btn btn-gradient'>Sample</button> 
-					<button onClick={ this.clearAll } className='btn btn-gradient'>Clear All</button>
+					<button onClick={ actions.sampleData } className='btn btn-gradient'>Sample</button>
+					<button onClick={ actions.clearAll } className='btn btn-gradient'>Clear All</button>
 				</div>
-				<h1 className="pull-left page-title">Retrospective <small>ReactJS</small></h1>
+				<h1 className="pull-left page-title">Retrospective <small>ReactJS w/RefluxJS</small></h1>
 				<div className='u-pull-right text-mute'><small>{ this.props.date }</small></div>
 			</header>
 		);
-	},
-
-	// ACTIONS
-	fillSampleData: function() {
-		dispatcher.dispatch({ actionType: actionTypes.sampleData });
-	},
-
-	clearAll: function() {
-		dispatcher.dispatch({ actionType: actionTypes.clearAll });
 	}
-
 });
 
 module.exports = Header;

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	STORE_KEY: 'retrospective-react',
+	STORE_KEY: 'retrospective-react-reflux',
 
 	actionTypes: {
 		clearAll: 'clear-all',

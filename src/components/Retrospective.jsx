@@ -1,17 +1,17 @@
 'use strict';
 
 var React = require('react');
-var store = require('../retrospectiveStore');
+// var store = require('../retrospectiveStore');
+var Reflux = require('reflux');
+var store = require('../RefluxStore');
 
 var Header = require('./Header.jsx');
 var Entries = require('./Entries.jsx');
-var Footer = require('./Footer.jsx');
-var Printable = require('./Printable.jsx');
+// var Footer = require('./Footer.jsx');
+// var Printable = require('./Printable.jsx');
 
 var Retrospective = React.createClass({
-	getInitialState: function () {
-		return { printable: false };
-	},
+	mixins: [Reflux.connect(store, 'data')],
 
 	getDefaultProps: function () {
 		var d = (new Date()).toJSON(), dParts;
@@ -24,19 +24,12 @@ var Retrospective = React.createClass({
 	},
 
 	render: function() {
-		if (this.state.printable === true) {
-			return <Printable store={store} date={this.props.date}/>;
-		} else {
-			return (
-				<div className='retrospective'>
-					<Header date={this.props.date} />
-					<Entries list='good' placeholder="What went well?" store={store} />
-					<Entries list='bad' votingEnabled="true" placeholder="What needs improvement?" store={store} />
-					<Entries list='next' placeholder="What should we try next time?" store={store} />
-					<Footer store={store} setPrintable={this.setPrintable} />
-				</div>
-			);
-		}
+		return (
+			<div className='retrospective'>
+				<Header date={this.props.date} />
+				<Entries store={this.state.data} list="good" placeholder="What went well?" />
+			</div>
+		);
 	},
 
 	setPrintable: function(val) {
