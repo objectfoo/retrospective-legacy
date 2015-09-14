@@ -1,11 +1,11 @@
+'use strict';
+
 var Reflux = require('reflux');
 
-var RetrospectiveActions = Reflux.createActions([
+module.exports = Reflux.createActions([
 	'clearAll',
 	'sampleData',
 	'addItem',
 	'deleteItem',
 	'updateText'
 ]);
-
-module.exports = RetrospectiveActions;
