@@ -13,10 +13,9 @@ var Entries = React.createClass({
 			<section className="phase">
 				<form action="#" onSubmit={this.onSubmit}>
 					<input
-						ref="noteInput"
 						type="text"
 						className="entry-field"
-						value={this.state.value}
+						value={this.state.text}
 						placeholder={this.props.placeholder}
 						onKeyDown={this.onKeyDown}
 						onChange={this.onChange} />
@@ -33,10 +32,8 @@ var Entries = React.createClass({
 	},
 
 	onSubmit: function(event) {
-		var inputField = React.findDOMNode(this.refs.noteInput);
-
 		actions.addItem(this.props.listName, this.state.text.trim());
-		inputField.value = '';
+		this.setState({text: ''});
 		event.preventDefault();
 	},
 
