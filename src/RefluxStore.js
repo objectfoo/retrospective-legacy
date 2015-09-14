@@ -69,15 +69,13 @@ var RefluxStore = Reflux.createStore({
 	},
 
 	updateText: function(id, listName, text) {
-		var list = this.data[listName]
-			, items
-			, item;
+		var item, items, list = this.data[listName];
 
 		items = list.filter(function(o) {
 			return o.id === id;
 		});
 
-		item = items && first(items);
+		item = first(items);
 
 		if (item) {
 			item.text = text;
