@@ -3,7 +3,9 @@ var Reflux = require('reflux');
 var RetrospectiveActions = Reflux.createActions([
 	'clearAll',
 	'sampleData',
-	'addItem'
+	'addItem',
+	'deleteItem',
+	'updateText'
 ]);
 
 module.exports = RetrospectiveActions;

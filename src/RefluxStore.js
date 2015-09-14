@@ -5,6 +5,7 @@ var RetrospectiveActions = require('./actions');
 var localStore = require('./lib/localStore');
 var sampleData = require('./sampledata.json');
 var uuid = require('./lib/uuid');
+var first = require('./lib/first');
 var defaultData = { good: [], bad: [], next: [] };
 
 var RefluxStore = Reflux.createStore({
@@ -38,12 +39,49 @@ var RefluxStore = Reflux.createStore({
 		this.trigger(this.data);
 	},
 
-	onAddItem: function(data, list) {
-		this.data[list].unshift({
+	onAddItem: function(listName, data) {
+		this.data[listName].unshift({
 			tally: 0,
 			text: data,
 			id: uuid()
 		});
+		localStore(this.data);
+		this.trigger(this.data);
+	},
+
+	onDeleteItem: function(id, listName) {
+		var list = this.data[listName]
+			, itemsToDelete
+			, idx
+			;
+
+		itemsToDelete = list.filter(function(o) {
+			return o.id === id;
+		});
+
+		idx = list.indexOf(first(itemsToDelete));
+
+		if (idx >= 0) {
+			list.splice(idx, 1);
+			localStore(this.data);
+			this.trigger(this.data);
+		}
+	},
+
+	updateText: function(id, listName, text) {
+		var list = this.data[listName]
+			, items
+			, item;
+
+		items = list.filter(function(o) {
+			return o.id === id;
+		});
+
+		item = items && first(items);
+
+		if (item) {
+			item.text = text;
+		}
 		localStore(this.data);
 		this.trigger(this.data);
 	}

@@ -1,10 +1,7 @@
 'use strict';
 
 var React = require('react');
-var actionTypes = require('../constants').actionTypes;
-var dispatcher = require('../dispatcher');
-
-var RETURN_KEY = 13;
+var actions = require('../actions');
 var ESCAPE_KEY = 27;
 
 var EntryForm = React.createClass({
@@ -20,7 +17,7 @@ var EntryForm = React.createClass({
 
 	render: function() {
 		return(
-			<form onSubmit={this.handleSubmit}>
+			<form action="#" onSubmit={this.onSubmit}>
 				<input
 					className="entry-field entry-field-fancy"
 					type="text"
@@ -34,13 +31,11 @@ var EntryForm = React.createClass({
 		);
 	},
 
-	handleSubmit: function() {
-		dispatcher.dispatch({
-			actionType: actionTypes.updateItem,
-			list: this.props.list,
-			itemId: this.props.item.id,
-			value: this.state.text.trim()
-		});
+	onSubmit: function(event) {
+		var n = React.findDOMNode(this.refs.EntryText);
+		actions.updateText(this.props.item.id, this.props.listName, n.value.trim());
+		this.props.toggleEditing();
+		event.preventDefault();
 	},
 
 	handleBlur: function(event) {
@@ -53,10 +48,7 @@ var EntryForm = React.createClass({
 	},
 
 	handleKeyDown: function(event) {
-		if (event.which === RETURN_KEY) {
-			this.setState({ text: this.refs.EntryText.getDOMNode().value.trim() });
-			this.handleSubmit();
-		} else if (event.which === ESCAPE_KEY) {
+		if (event.which === ESCAPE_KEY) {
 			this.props.toggleEditing();
 		}
 	}
