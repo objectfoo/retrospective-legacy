@@ -38,8 +38,7 @@ var EntryForm = React.createClass({
 		event.preventDefault();
 	},
 
-	handleBlur: function(event) {
-		this.setState({ text: event.target.value.trim() });
+	handleBlur: function() {
 		this.props.toggleEditing();
 	},
 
