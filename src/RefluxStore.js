@@ -68,7 +68,7 @@ var RefluxStore = Reflux.createStore({
 		}
 	},
 
-	updateText: function(id, listName, text) {
+	onUpdateText: function(id, listName, text) {
 		var item, items, list = this.data[listName];
 
 		items = list.filter(function(o) {
@@ -82,6 +82,10 @@ var RefluxStore = Reflux.createStore({
 		}
 		localStore(this.data);
 		this.trigger(this.data);
+	},
+
+	onUpdateVote: function() {
+		window.console.log('update vote action');
 	}
 
 });

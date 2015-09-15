@@ -23,8 +23,8 @@ var Retrospective = React.createClass({
 			<div className='retrospective'>
 				<Header date={this.props.date} />
 				<Entries store={this.state.data} listName="good" placeholder="What went well?" />
-				<Entries store={this.state.data} listName="bad" placeholder="What needs improvement?" />
-				<Entries store={this.state.data} listName="next" placeholder="What needs improvement?" />
+				<Entries store={this.state.data} listName="bad" votingEnabled={true} placeholder="What needs improvement?" />
+				<Entries store={this.state.data} listName="next" placeholder="What should we try next time?" />
 			</div>
 		);
 	},

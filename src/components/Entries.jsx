@@ -52,7 +52,15 @@ var Entries = React.createClass({
 			, listName = this.props.listName;
 
 		return store[listName].map(function(item) {
-			return <Entry item={item} key={item.id} listName={this.props.listName} deleteItem={this.deleteItem.bind(this, item.id)}/>;
+			var p = {
+				item: item,
+				key: item.id,
+				listName: this.props.listName,
+				votingEnabled: this.props.votingEnabled,
+				deleteItem: this.deleteItem.bind(this, item.id)
+			};
+
+			return <Entry {...p} />;
 		}, this);
 	},
 
