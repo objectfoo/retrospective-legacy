@@ -9,6 +9,10 @@ var Entries = React.createClass({
 	render: function() {
 		var cn = 'list-plain list-retrospective';
 
+		if (this.props.voting) {
+			cn += ' list-voting';
+		}
+
 		return(
 			<section className="phase">
 				<form action="#" onSubmit={this.onSubmit}>
@@ -56,7 +60,7 @@ var Entries = React.createClass({
 				item: item,
 				key: item.id,
 				listName: this.props.listName,
-				votingEnabled: this.props.votingEnabled,
+				voting: this.props.voting,
 				deleteItem: this.deleteItem.bind(this, item.id)
 			};
 

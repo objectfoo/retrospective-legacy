@@ -21,6 +21,12 @@ var RefluxStore = Reflux.createStore({
 			localStore(defaultData);
 			this.data = localStore();
 		}
+
+	},
+
+	changed: function() {
+		localStore(this.data);
+		this.trigger(this.data);
 	},
 
 	getInitialState: function() {
@@ -28,15 +34,13 @@ var RefluxStore = Reflux.createStore({
 	},
 
 	onSampleData: function() {
-		localStore(sampleData);
 		this.data = sampleData;
-		this.trigger(this.data);
+		this.changed();
 	},
 
 	onClearAll: function() {
-		localStore(defaultData);
 		this.data = defaultData;
-		this.trigger(this.data);
+		this.changed();
 	},
 
 	onAddItem: function(listName, data) {
@@ -45,49 +49,41 @@ var RefluxStore = Reflux.createStore({
 			text: data,
 			id: uuid()
 		});
-		localStore(this.data);
-		this.trigger(this.data);
+		this.changed();
 	},
 
 	onDeleteItem: function(id, listName) {
 		var list = this.data[listName]
-			, itemsToDelete
-			, idx
-			;
-
-		itemsToDelete = list.filter(function(o) {
-			return o.id === id;
-		});
-
-		idx = list.indexOf(first(itemsToDelete));
+			, recordToDelete = findRecord(this.data[listName])
+			, idx = list.indexOf(first(recordToDelete));
 
 		if (idx >= 0) {
 			list.splice(idx, 1);
-			localStore(this.data);
-			this.trigger(this.data);
+			this.changed();
 		}
 	},
 
 	onUpdateText: function(id, listName, text) {
-		var item, items, list = this.data[listName];
+		var record = findRecord(id, this.data[listName]);
 
-		items = list.filter(function(o) {
-			return o.id === id;
-		});
-
-		item = first(items);
-
-		if (item) {
-			item.text = text;
-		}
-		localStore(this.data);
-		this.trigger(this.data);
+		record.text = text;
+		this.changed();
 	},
 
-	onUpdateVote: function() {
-		window.console.log('update vote action');
-	}
+	onUpdateVote: function(id, listName, value) {
+		var record = findRecord(id, this.data[listName]);
 
+		record.tally = value;
+		this.changed();
+	}
 });
 
 module.exports = RefluxStore;
+
+function findRecord(id, list) {
+	var items = list.filter(function(o) {
+		return o.id === id;
+	});
+
+	return first(items);
+}

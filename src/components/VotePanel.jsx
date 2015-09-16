@@ -8,8 +8,9 @@ var VotePanel = React.createClass({
 	render: function() {
 		return (
 			<div className="u-pull-left" style={{ margin: '0 8px' }}>
-				<button
-					onClick={this.onClick} className="btn-increment" type="button">+</button>
+				<button type="button"
+					onClick={this.onClick}
+					className="btn-increment">+</button>
 				<input
 					className="entry-vote"
 					type="text"
@@ -21,8 +22,10 @@ var VotePanel = React.createClass({
 		);
 	},
 
-	onChange: function() {
-		actions.updateVote();
+	onChange: function(event) {
+		var value = parseInt(event.target.value, 10);
+
+		actions.updateVote(this.props.id, this.props.listName, value);
 	},
 
 	onKeyPress: function(event) {
@@ -32,36 +35,8 @@ var VotePanel = React.createClass({
 	},
 
 	onClick: function() {
-		actions.updateVote();
+		actions.updateVote(this.props.id, this.props.listName, this.props.tally + 1);
 	}
 });
 
 module.exports = VotePanel;
-
-
-/*
-	handleIncrement: function() {
-		// dispatcher.dispatch({
-		// 	actionType: actionTypes.incrementTally,
-		// 	list: this.props.list,
-		// 	itemId: this.props.item.id
-		// });
-	},
-
-	handleChange: function() {
-		// var value = parseInt(event.target.value, 10);
-		//
-		// dispatcher.dispatch({
-		// 	actionType: actionTypes.setTally,
-		// 	list: this.props.list,
-		// 	itemId: this.props.item.id,
-		// 	value: value
-		// });
-	},
-
-	handleKeyPress: function() {
-		// if (!isDigitCharCode(event.which)) {
-		// 	event.preventDefault();
-		// }
-	}
- */
