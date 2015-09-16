@@ -11,7 +11,7 @@ var Footer = React.createClass({
 					<button onClick={ this.printable } className="btn btn-bordered btn-gradient" type="button">Printable</button>
 					<button onClick={ this.sortBadList } className="btn btn-bordered btn-gradient" type="button">Sort</button>
 				</div>
-				<small className="u-pull-right text-mute">a Katabelisk production, Retrospective v7.0 (reactjs)</small>
+				<small className="u-pull-right text-mute">a Katabelisk production, Retrospective v7.0 (reactjs and reflux)</small>
 			</footer>
 		);
 	},
