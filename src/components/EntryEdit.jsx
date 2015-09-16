@@ -17,15 +17,15 @@ var EntryForm = React.createClass({
 
 	render: function() {
 		return(
-			<form action="#" onSubmit={this.onSubmit}>
+			<form action="#" onSubmit={ this.onSubmit }>
 				<input
 					className="entry-field entry-field-fancy"
 					type="text"
 					ref="EntryText"
-					value={this.state.text}
-					onChange={this.handleChange}
-					onBlur={this.handleBlur}
-					onKeyDown={this.handleKeyDown}
+					value={ this.state.text }
+					onChange={ this.handleChange }
+					onBlur={ this.handleBlur }
+					onKeyDown={ this.handleKeyDown }
 					/>
 			</form>
 		);

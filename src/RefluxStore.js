@@ -54,8 +54,8 @@ var RefluxStore = Reflux.createStore({
 
 	onDeleteItem: function(id, listName) {
 		var list = this.data[listName]
-			, recordToDelete = findRecord(this.data[listName])
-			, idx = list.indexOf(first(recordToDelete));
+			, recordToDelete = findRecord(id, list)
+			, idx = list.indexOf(recordToDelete);
 
 		if (idx >= 0) {
 			list.splice(idx, 1);
@@ -74,6 +74,13 @@ var RefluxStore = Reflux.createStore({
 		var record = findRecord(id, this.data[listName]);
 
 		record.tally = value;
+		this.changed();
+	},
+
+	onSortBadList: function() {
+		this.data.bad.sort(function(a, b) {
+			return a.tally - b.tally;
+		});
 		this.changed();
 	}
 });

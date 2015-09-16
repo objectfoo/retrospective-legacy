@@ -18,18 +18,18 @@ var Entry = React.createClass({
 			;
 
 		if (isEditing) {
-			content = <EntryEdit {...this.props} toggleEditing={this.toggleEditing} />;
+			content = <EntryEdit { ...this.props } toggleEditing={ this.toggleEditing } />;
 		}
 		else {
 			if (this.props.voting) {
-				vote = <VotePanel tally={tally} listName={listName} id={id} />;
+				vote = <VotePanel tally={ tally } listName={ listName } id={ id } />;
 			}
 
-			content = <div className="entry-content" onDoubleClick={this.toggleEditing}>{text}</div>;
-			button = <button tabIndex="-1" className="btn-close" type="button" onClick={this.props.deleteItem}>{String.fromCharCode(10006)}</button>;
+			content = <div className="entry-content" onDoubleClick={ this.toggleEditing }>{ text }</div>;
+			button = <button tabIndex="-1" className="btn-close" type="button" onClick={ this.props.deleteItem }>{String.fromCharCode(10006)}</button>;
 		}
 
-		return <li>{vote}{content}{button}</li>;
+		return <li>{ vote }{ content }{ button }</li>;
 	},
 
 	getInitialState: function() {

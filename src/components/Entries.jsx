@@ -15,17 +15,17 @@ var Entries = React.createClass({
 
 		return(
 			<section className="phase">
-				<form action="#" onSubmit={this.onSubmit}>
+				<form action="#" onSubmit={ this.onSubmit }>
 					<input
 						type="text"
 						className="entry-field"
-						value={this.state.text}
-						placeholder={this.props.placeholder}
-						onKeyDown={this.onKeyDown}
-						onChange={this.onChange} />
+						value={ this.state.text }
+						placeholder={ this.props.placeholder }
+						onKeyDown={ this.onKeyDown }
+						onChange={ this.onChange } />
 				</form>
-				<ul id={this.props.listName} className={cn}>
-					{this.renderEntries()}
+				<ul id={ this.props.listName } className={ cn }>
+					{ this.renderEntries() }
 				</ul>
 			</section>
 		);
@@ -37,7 +37,7 @@ var Entries = React.createClass({
 
 	onSubmit: function(event) {
 		actions.addItem(this.props.listName, this.state.text.trim());
-		this.setState({text: ''});
+		this.setState({ text: '' });
 		event.preventDefault();
 	},
 
@@ -52,10 +52,10 @@ var Entries = React.createClass({
 	},
 
 	renderEntries: function() {
-		var store = this.props.store
+		var data = this.props.data
 			, listName = this.props.listName;
 
-		return store[listName].map(function(item) {
+		return data[listName].map(function(item) {
 			var p = {
 				item: item,
 				key: item.id,
@@ -64,7 +64,7 @@ var Entries = React.createClass({
 				deleteItem: this.deleteItem.bind(this, item.id)
 			};
 
-			return <Entry {...p} />;
+			return <Entry { ...p } />;
 		}, this);
 	},
 

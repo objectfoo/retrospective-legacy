@@ -8,5 +8,7 @@ module.exports = Reflux.createActions([
 	'addItem',
 	'deleteItem',
 	'updateText',
-	'updateVote'
+	'updateVote',
+	'printable',
+	'sortBadList'
 ]);

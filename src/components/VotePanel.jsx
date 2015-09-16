@@ -9,14 +9,14 @@ var VotePanel = React.createClass({
 		return (
 			<div className="u-pull-left" style={{ margin: '0 8px' }}>
 				<button type="button"
-					onClick={this.onClick}
+					onClick={ this.onClick }
 					className="btn-increment">+</button>
 				<input
 					className="entry-vote"
 					type="text"
-					value={this.props.tally}
-					onChange={this.onChange}
-					onKeyPress={this.onKeyPress}
+					value={ this.props.tally }
+					onChange={ this.onChange }
+					onKeyPress={ this.onKeyPress }
 				/>
 			</div>
 		);
