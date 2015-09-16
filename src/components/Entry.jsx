@@ -7,29 +7,48 @@ var VotePanel = require('./VotePanel.jsx');
 
 var Entry = React.createClass({
 	render: function() {
-		var isEditing = this.state.isEditing
-			, text = this.props.item.text
-			, tally = this.props.item.tally
-			, id = this.props.item.id
-			, listName = this.props.listName
-			, button = null
-			, content = null
-			, vote = null
-			;
+		return <li>{ this.votePanel() }{ this.content() }{ this.deleteButton() }</li>;
+	},
 
-		if (isEditing) {
-			content = <EntryEdit { ...this.props } toggleEditing={ this.toggleEditing } />;
+	votePanel: function() {
+		var voting = this.props.voting
+			, isEditing = this.state.isEditing
+			, tally = this.props.item.tally
+			, listName = this.props.listName
+			, id = this.props.item.id;
+
+		if (!isEditing && voting) {
+			return <VotePanel tally={ tally } listName={ listName } id={ id } />;
 		}
 		else {
-			if (this.props.voting) {
-				vote = <VotePanel tally={ tally } listName={ listName } id={ id } />;
-			}
-
-			content = <div className="entry-content" onDoubleClick={ this.toggleEditing }>{ text }</div>;
-			button = <button tabIndex="-1" className="btn-close" type="button" onClick={ this.props.deleteItem }>{String.fromCharCode(10006)}</button>;
+			return null;
 		}
+	},
 
-		return <li>{ vote }{ content }{ button }</li>;
+	content: function() {
+		var text = this.props.item.text;
+
+		if (this.state.isEditing) {
+			return <EntryEdit { ...this.props } toggleEditing={ this.toggleEditing } />;
+		}
+		else {
+			return <div className="entry-content" onDoubleClick={ this.toggleEditing }>{ text }</div>;
+		}
+	},
+
+	deleteButton: function() {
+		if (!this.state.isEditing) {
+			return(
+				<button
+					tabIndex="-1"
+					className="btn-close"
+					type="button"
+					onClick={ this.props.deleteItem }>{ String.fromCharCode(10006) }</button>
+			);
+		}
+		else {
+			return null;
+		}
 	},
 
 	getInitialState: function() {

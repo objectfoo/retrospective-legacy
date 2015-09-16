@@ -52,14 +52,13 @@ var Entries = React.createClass({
 	},
 
 	renderEntries: function() {
-		var data = this.props.data
-			, listName = this.props.listName;
+		var listName = this.props.listName;
 
-		return data[listName].map(function(item) {
+		return this.props.data[listName].map(function(item) {
 			var p = {
 				item: item,
 				key: item.id,
-				listName: this.props.listName,
+				listName: listName,
 				voting: this.props.voting,
 				deleteItem: this.deleteItem.bind(this, item.id)
 			};

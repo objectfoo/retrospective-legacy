@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Reflux = require('reflux');
-var store = require('../RefluxStore');
+var store = require('../Store');
 var formatDate = require('../lib/formatDate');
 
 var Header = require('./Header.jsx');

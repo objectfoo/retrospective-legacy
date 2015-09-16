@@ -2,7 +2,7 @@
 
 little helper for doing sprint retrospectives
 
-The react re-write.
+The react + reflux re-write.
 
 build
 
@@ -29,6 +29,6 @@ $ npm run watch
 
 ## References
 
-http://blog.andrewray.me/flux-for-stupid-people/
+http://blog.krawaller.se/posts/a-reflux-todomvc-codebase-walkthrough/
 
-http://blogs.atlassian.com/2014/08/flux-architecture-step-by-step/
+http://blog.krawaller.se/posts/the-reflux-data-flow-model/

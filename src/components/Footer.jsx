@@ -16,7 +16,6 @@ var Footer = React.createClass({
 		);
 	},
 
-	// ACTIONS
 	sortBadList: function() {
 		actions.sortBadList();
 	},

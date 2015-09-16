@@ -6,6 +6,7 @@ var localStore = require('./lib/localStore');
 var sampleData = require('./sampledata.json');
 var uuid = require('./lib/uuid');
 var first = require('./lib/first');
+var eqId = require('./lib/eqId');
 var defaultData = { good: [], bad: [], next: [] };
 
 var RefluxStore = Reflux.createStore({
@@ -88,9 +89,7 @@ var RefluxStore = Reflux.createStore({
 module.exports = RefluxStore;
 
 function findRecord(id, list) {
-	var items = list.filter(function(o) {
-		return o.id === id;
-	});
+	var items = list.filter(eqId(id));
 
 	return first(items);
 }
